@@ -7,122 +7,140 @@ import NowPlaying from '../components/NowPlaying';
 
 export const prerender = true;
 
-// Featured tier — screenshot slots activate when files land in public/projects/.
+// Screenshot slots activate when files land in public/projects/<slug>.png.
 const shot = (slug: string) => (fs.existsSync(`public/projects/${slug}.png`) ? `/projects/${slug}.png` : null);
 
-const FEATURED = [
+// Hand-picked project list — the source of truth for what's public. Never
+// auto-list private repos. `href: null` renders as "Private" (no link).
+// Operational + In development render as cards; Dormant + Decommissioned as rows.
+type Project = {
+  slug: string;
+  name: string;
+  status: 'OPERATIONAL' | 'IN DEVELOPMENT' | 'DORMANT' | 'DECOMMISSIONED';
+  blurb: string;
+  tags: string[];
+  href: string | null;
+  linkLabel?: string;
+};
+
+const PROJECTS: Project[] = [
+  // ── Operational ──
   {
-    serial: '001',
-    name: 'dayplan',
-    badge: 'IN DEVELOPMENT',
-    blurb:
-      'AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks — review, apply atomically, undo as a group.',
-    tags: ['react', 'sqlite', 'ai-assistant', 'self-hosted'],
-    href: 'https://adeptproductions.dev/apps/dayplan/',
-    image: shot('dayplan'),
-  },
-  {
-    serial: '002',
-    name: 'ConnectHub',
-    badge: 'IN DEVELOPMENT',
-    blurb:
-      'Real-time chat platform on Bun — Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.',
-    tags: ['bun', 'websockets', 'e2ee'],
-    href: 'https://adeptproductions.dev/apps/connecthub/',
-    image: shot('connecthub'),
-  },
-  {
-    serial: '003',
+    slug: 'adeptlab',
     name: 'AdepTLab',
-    badge: 'OPERATIONAL',
+    status: 'OPERATIONAL',
     blurb:
-      'My homelab: two Proxmox servers running 20+ services — media, photos, AI inference, automation — with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
+      'My homelab: two Proxmox servers running 20+ services (media, photos, AI inference, automation) with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
     tags: ['proxmox', 'docker', 'zfs', 'tailscale', 'cloudflare'],
     href: null,
-    image: shot('adeptlab'),
   },
   {
-    serial: '004',
+    slug: 'studio',
     name: 'adeptproductions.dev',
-    badge: 'OPERATIONAL',
+    status: 'OPERATIONAL',
     blurb:
-      'The studio itself — app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions.',
+      'The studio itself: app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions.',
     tags: ['astro', 'tailwind', 'docker', 'self-hosted'],
     href: 'https://adeptproductions.dev',
-    image: shot('studio'),
-  },
-];
-
-// Hand-picked archive — the source of truth for what's public. Repos without
-// `href` are private and render without a link (never auto-list private repos).
-const ARCHIVE = [
-  {
-    name: 'Ditto Looper',
-    blurb: 'Real-time Android audio looper modeled on a guitar pedal — layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
-    tags: ['kotlin', 'android', 'oboe'],
-    status: 'IN DEVELOPMENT',
-    href: 'https://github.com/AdeptOfficial/record',
+    linkLabel: 'Visit',
   },
   {
-    name: 'Syna',
-    blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
-    tags: ['python', 'llm'],
-    status: 'DORMANT',
-    href: 'https://github.com/AdeptOfficial/Syna',
-  },
-  {
-    name: 'vLLM on an RTX 5090',
-    blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine — without breaking system Python, CUDA, or drivers.',
-    tags: ['vllm', 'cuda', 'benchmarks'],
-    status: 'IN DEVELOPMENT',
-    href: 'https://github.com/AdeptOfficial/vLLM-test',
-  },
-  {
+    slug: 'status-tracker',
     name: 'Status Tracker',
+    status: 'OPERATIONAL',
     blurb: 'Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.',
     tags: ['python', 'webhooks', 'self-hosted'],
-    status: 'OPERATIONAL',
     href: 'https://github.com/AdeptOfficial/status-tracker',
   },
   {
-    name: 'Domain Watcher',
-    blurb: 'Daily RDAP checks on domains I want or own — alerts the day a drop is coming, so I never lose another one by six days.',
-    tags: ['rdap', 'n8n', 'self-hosted'],
-    status: 'IN DEVELOPMENT',
-    href: null,
-  },
-  {
+    slug: 'tracker-bot',
     name: '[REDACTED] Tracker Bot',
-    blurb: 'Discord bot built from scratch for a [REDACTED] community server — member verification, a recruiter queue, and course records.',
-    tags: ['discord.js', 'mongodb'],
     status: 'OPERATIONAL',
+    blurb: 'Discord bot built from scratch for a [REDACTED] community server: member verification, a recruiter queue, and course records.',
+    tags: ['discord.js', 'mongodb'],
     href: null,
   },
+  // ── In development ──
   {
-    name: 'DevHub',
+    slug: 'dayplan',
+    name: 'dayplan',
+    status: 'IN DEVELOPMENT',
     blurb:
-      'Collab project with a friend: a hub for finding projects to contribute to and people to build with — video calling, real-time chat, and a meetup location finder.',
-    tags: ['django', 'channels', 'celery', 'redis', 'docker'],
-    status: 'DECOMMISSIONED',
+      'AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks. Review, apply atomically, undo as a group.',
+    tags: ['react', 'sqlite', 'ai-assistant', 'self-hosted'],
+    href: 'https://adeptproductions.dev/apps/dayplan/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'connecthub',
+    name: 'ConnectHub',
+    status: 'IN DEVELOPMENT',
+    blurb:
+      'Real-time chat platform on Bun: Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.',
+    tags: ['bun', 'websockets', 'e2ee'],
+    href: 'https://adeptproductions.dev/apps/connecthub/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'ditto-looper',
+    name: 'Ditto Looper',
+    status: 'IN DEVELOPMENT',
+    blurb: 'Real-time Android audio looper modeled on a guitar pedal: layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
+    tags: ['kotlin', 'android', 'oboe'],
+    href: 'https://github.com/AdeptOfficial/record',
+  },
+  {
+    slug: 'domain-watcher',
+    name: 'Domain Watcher',
+    status: 'IN DEVELOPMENT',
+    blurb: 'Daily RDAP checks on domains I want or own. Alerts the day a drop is coming, so I never lose another one by six days.',
+    tags: ['rdap', 'n8n', 'self-hosted'],
     href: null,
   },
   {
-    name: 'adept.dev — Mark 1',
-    blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2 — the one you're reading.",
-    tags: ['nextjs', 'vercel'],
+    slug: 'vllm',
+    name: 'vLLM on an RTX 5090',
+    status: 'IN DEVELOPMENT',
+    blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine without breaking system Python, CUDA, or drivers.',
+    tags: ['vllm', 'cuda', 'benchmarks'],
+    href: 'https://github.com/AdeptOfficial/vLLM-test',
+  },
+  // ── Dormant ──
+  {
+    slug: 'syna',
+    name: 'Syna',
+    status: 'DORMANT',
+    blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
+    tags: ['python', 'llm'],
+    href: 'https://github.com/AdeptOfficial/Syna',
+  },
+  // ── Decommissioned ──
+  {
+    slug: 'devhub',
+    name: 'DevHub',
     status: 'DECOMMISSIONED',
+    blurb:
+      'Collab project with a friend: a hub for finding projects to contribute to and people to build with, with video calling, real-time chat, and a meetup location finder.',
+    tags: ['django', 'channels', 'celery', 'redis', 'docker'],
+    href: null,
+  },
+  {
+    slug: 'adept-dev-mark-1',
+    name: 'adept.dev — Mark 1',
+    status: 'DECOMMISSIONED',
+    blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2, the one you're reading.",
+    tags: ['nextjs', 'vercel'],
     href: null,
   },
 ];
 
-// Project lifecycle — one vocabulary for badges and grouping.
+// Project lifecycle: one vocabulary, one color per stage (all sampled from the brand art).
 const STAGES = [
-  { key: 'OPERATIONAL', color: 'var(--color-signal)', note: 'shipped & running' },
-  { key: 'IN DEVELOPMENT', color: 'var(--color-ink)', note: 'actively being built' },
-  { key: 'DORMANT', color: 'var(--color-muted)', note: 'on the shelf, may return' },
-  { key: 'DECOMMISSIONED', color: 'var(--color-faint)', note: 'retired, kept for the record' },
-];
-const STATUS_COLOR: Record<string, string> = Object.fromEntries(STAGES.map((st) => [st.key, st.color]));
+  { key: 'OPERATIONAL', color: 'var(--color-signal)', note: 'shipped & running', layout: 'cards' },
+  { key: 'IN DEVELOPMENT', color: 'var(--color-matrix)', note: 'actively being built', layout: 'cards' },
+  { key: 'DORMANT', color: 'var(--color-scarf)', note: 'on the shelf, may return', layout: 'rows' },
+  { key: 'DECOMMISSIONED', color: 'var(--color-crimson)', note: 'retired, kept for the record', layout: 'rows' },
+] as const;
 
 // Render [REDACTED] tokens inside text as styled redaction bars.
 const redactParts = (text: string) => text.split(/(\[REDACTED\])/);
@@ -340,7 +358,7 @@ const CAPABILITIES = [
     </a>
   </section>
 
-  <!-- 3.0 PROJECTS — cards dealt onto the table -->
+  <!-- 3.0 PROJECTS — grouped by lifecycle stage: live work as cards, the rest as rows -->
   <section
     id="projects"
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
@@ -349,111 +367,101 @@ const CAPABILITIES = [
       <SectionHead cmd="ls -la sections/3.0_projects/" headline="Projects make perfect" />
     </div>
 
-    <!-- Featured tier -->
-    <div class="stagger mt-8 grid gap-4 md:grid-cols-2">
-      {
-        FEATURED.map((p) => {
-          const Card = p.href ? 'a' : 'div';
-          return (
-          <Card
-            href={p.href ?? undefined}
-            class="rv-scale group flex flex-col border border-line bg-card transition-colors hover:border-muted"
-          >
-            {p.image ? (
-              <img src={p.image} alt={`${p.name} screenshot`} class="aspect-video w-full border-b border-line object-cover" />
-            ) : (
-              <div
-                class="relative flex aspect-video w-full items-end overflow-hidden border-b border-line p-4"
-                style="background: radial-gradient(28rem at top right, color-mix(in srgb, var(--color-signal) 12%, var(--color-surface)), var(--color-surface));"
-              >
-                <span
-                  class="pointer-events-none absolute -right-2 -top-8 select-none font-display text-[7rem] font-bold leading-none opacity-10"
-                  style="color: var(--color-signal);"
-                  aria-hidden="true"
-                >
-                  {p.serial}
-                </span>
-                <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-faint">{p.serial} / preview pending</span>
-              </div>
-            )}
-            <div class="flex flex-1 flex-col p-5">
-              <div class="flex items-start justify-between gap-3">
-                <h3 class="font-display text-lg font-bold">{p.name}</h3>
-                <span
-                  class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em]"
-                  style={`color: ${STATUS_COLOR[p.badge]};`}
-                >
-                  {p.badge}
-                </span>
-              </div>
-              <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{p.blurb}</p>
-              <div class="mt-4 flex flex-wrap gap-x-3 gap-y-1">
-                {p.tags.map((t) => (
-                  <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
-                ))}
-              </div>
-            </div>
-          </Card>
-          );
-        })
-      }
-    </div>
-
-    <!-- Other operations — hand-picked (ARCHIVE above), grouped by lifecycle stage;
-         private projects have no link -->
-    <h3 class="rv mt-12 font-display text-xl font-bold uppercase tracking-wide">Other operations</h3>
     {
       STAGES.map((stage) => {
-        const items = ARCHIVE.filter((p) => p.status === stage.key);
+        const items = PROJECTS.filter((p) => p.status === stage.key);
         if (items.length === 0) return null;
         return (
-          <div class="mt-6">
-            <h4 class="rv flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
+          <div class="mt-10">
+            <h3 class="rv flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.25em]">
               <span class="size-1.5" style={`background: ${stage.color};`} aria-hidden="true" />
-              <span style={`color: ${stage.color};`}>{stage.key}</span>
+              <span class="font-bold" style={`color: ${stage.color};`}>{stage.key}</span>
               <span class="text-faint">[{items.length}] // {stage.note}</span>
-            </h4>
-            <div class="mt-3 grid gap-px">
-      {
-        items.map((p) => (
-          <div class="rv flex flex-wrap items-center justify-between gap-3 border border-line bg-card px-5 py-4 transition-colors hover:border-muted">
-            <div class="min-w-0">
-              <h4 class="font-display font-bold">
-                {redactParts(p.name).map((part) =>
-                  part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
-                )}
-              </h4>
-              <p class="mt-1 text-sm leading-relaxed text-muted">
-                {redactParts(p.blurb).map((part) =>
-                  part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
-                )}
-              </p>
-              <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1">
-                {p.tags.map((t) => (
-                  <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
+            </h3>
+
+            {stage.layout === 'cards' ? (
+              <div class="stagger mt-4 grid gap-4 md:grid-cols-2">
+                {items.map((p, i) => {
+                  const Card = p.href ? 'a' : 'div';
+                  const image = shot(p.slug);
+                  return (
+                    <Card
+                      href={p.href ?? undefined}
+                      target={p.href?.startsWith('http') && !p.href.includes('adeptproductions.dev') ? '_blank' : undefined}
+                      rel={p.href ? 'noreferrer' : undefined}
+                      class="rv-scale group relative flex flex-col overflow-hidden border border-line transition-colors hover:border-muted"
+                      style={`border-top: 2px solid ${stage.color};
+                        background: radial-gradient(32rem at top right, color-mix(in srgb, ${stage.color} 7%, var(--color-card)), var(--color-card));`}
+                    >
+                      {image && <img src={image} alt={`${p.name} screenshot`} class="aspect-video w-full border-b border-line object-cover" />}
+                      <span
+                        class="pointer-events-none absolute -right-2 -top-6 select-none font-display text-[6rem] font-bold leading-none opacity-[0.07]"
+                        style={`color: ${stage.color};`}
+                        aria-hidden="true"
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <div class="relative flex flex-1 flex-col p-5">
+                        <div class="flex items-start justify-between gap-3">
+                          <h4 class="font-display text-lg font-bold">
+                            {redactParts(p.name).map((part) =>
+                              part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
+                            )}
+                          </h4>
+                          <span
+                            class="shrink-0 font-mono text-[11px] uppercase tracking-[0.15em]"
+                            style={`color: ${p.href ? stage.color : 'var(--color-faint)'};`}
+                          >
+                            {p.href ? `${p.linkLabel ?? 'GitHub'} ↗` : 'Private'}
+                          </span>
+                        </div>
+                        <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                          {redactParts(p.blurb).map((part) =>
+                            part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
+                          )}
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-x-3 gap-y-1">
+                          {p.tags.map((t) => (
+                            <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            ) : (
+              <div class="mt-4 grid gap-px">
+                {items.map((p) => (
+                  <div
+                    class="rv grid gap-3 border border-line bg-card px-5 py-4 transition-colors hover:border-muted sm:grid-cols-[1fr_auto] sm:items-center"
+                    style={`border-left: 2px solid ${stage.color};`}
+                  >
+                    <div class="min-w-0">
+                      <h4 class="font-display font-bold">{p.name}</h4>
+                      <p class="mt-1 text-sm leading-relaxed text-muted">{p.blurb}</p>
+                      <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+                        {p.tags.map((t) => (
+                          <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                    {p.href ? (
+                      <a
+                        href={p.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        class="font-mono text-[11px] uppercase tracking-[0.15em] text-muted hover:text-ink"
+                      >
+                        {p.linkLabel ?? 'GitHub'} ↗
+                      </a>
+                    ) : (
+                      <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint">Private</span>
+                    )}
+                  </div>
                 ))}
               </div>
-            </div>
-            <div class="flex shrink-0 items-center gap-3">
-              {p.href ? (
-                <a
-                  href={p.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  class="font-mono text-[11px] uppercase tracking-[0.15em] text-muted hover:text-ink"
-                >
-                  GitHub ↗
-                </a>
-              ) : (
-                <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint" title="Private repository">
-                  Private
-                </span>
-              )}
-            </div>
-          </div>
-        ))
-      }
-            </div>
+            )}
           </div>
         );
       })
