@@ -80,5 +80,26 @@ const commit: string = __COMMIT__;
         </p>
       </div>
     </footer>
+
+    <script>
+      // Section entrance reveals; everything stays visible if JS/IO is unavailable.
+      const sections = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('in-view');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12 }
+        );
+        sections.forEach((s) => io.observe(s));
+      } else {
+        sections.forEach((s) => s.classList.add('in-view'));
+      }
+    </script>
   </body>
 </html>
