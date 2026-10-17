@@ -453,15 +453,14 @@ const CAPABILITIES = [
               </span>
             </div>
             <div class="p-5">
-              <p class="font-mono text-sm font-bold">
-                <span class="text-faint">╭──</span> {rig.title} <span class="text-faint">─╮</span>
-              </p>
-              <dl class="mt-1.5">
+              <div class="grid grid-cols-[1.4rem_1fr] text-sm leading-6">
+                <span class="tree-tick first" aria-hidden="true" />
+                <p class="font-mono font-bold">{rig.title}</p>
+              </div>
+              <dl>
                 {rig.rows.map(([k, v, kind], i) => (
                   <div class="grid grid-cols-[1.4rem_6.5rem_1fr] gap-x-1 text-sm leading-6">
-                    <span class="select-none font-mono text-faint" aria-hidden="true">
-                      {i === rig.rows.length - 1 ? '╰─' : '├─'}
-                    </span>
+                    <span class={`tree-tick${i === rig.rows.length - 1 ? ' last' : ''}`} aria-hidden="true" />
                     <dt class="font-mono text-[11px] uppercase leading-6 tracking-[0.15em]" style="color: var(--color-signal);">
                       {k}
                     </dt>

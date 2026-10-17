@@ -207,3 +207,46 @@ details.decrypt[open] .when-open {
     transform: translateY(-5px) rotate(-1.2deg);
   }
 }
+
+/* fastfetch tree connectors — CSS-drawn so the spine stays continuous
+   across wrapped lines (font box-drawing glyphs can't). */
+.tree-tick {
+  position: relative;
+}
+.tree-tick::before {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--color-line);
+}
+.tree-tick::after {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 0.75rem;
+  width: 0.55rem;
+  border-top: 1px solid var(--color-line);
+}
+/* first row: spine starts AT the tick (rounded shoulder down) */
+.tree-tick.first::before {
+  top: 0.75rem;
+  border-top: 1px solid var(--color-line);
+  border-top-left-radius: 5px;
+  width: 0.55rem;
+}
+.tree-tick.first::after {
+  display: none;
+}
+/* last row: spine ends at the tick (rounded elbow) */
+.tree-tick.last::before {
+  bottom: auto;
+  height: 0.75rem;
+  width: 0.55rem;
+  border-bottom: 1px solid var(--color-line);
+  border-bottom-left-radius: 5px;
+}
+.tree-tick.last::after {
+  display: none;
+}
