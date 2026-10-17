@@ -6,14 +6,18 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'AdepT — computer science student, builder of small focused software.' } = Astro.props;
+const { title, description = 'AdepT — software developer, founder of Adept Productions.' } = Astro.props;
 
 const NAV = [
+  { label: 'About', href: '/#about' },
+  { label: 'Experience', href: '/#experience' },
   { label: 'Projects', href: '/#projects' },
-  { label: 'Contact', href: '/contact/' },
-  // Studio site — swap for the real domain once purchased.
-  { label: 'Studio', href: 'https://adeptproductions.dev' },
+  { label: 'Contact', href: '/#contact' },
 ];
+
+// Baked at build time (astro.config.mjs). Mark 1 = the retired Next.js site.
+// @ts-ignore — injected by vite define
+const commit: string = __COMMIT__;
 ---
 
 <!doctype html>
@@ -29,22 +33,28 @@ const NAV = [
   </head>
   <body class="flex min-h-screen flex-col">
     <header class="sticky top-0 z-50 border-b border-line bg-base/90 backdrop-blur">
-      <div class="flex h-16 w-full items-center justify-between px-4 sm:px-8 lg:px-14">
-        <a href="/" class="flex items-center gap-3">
+      <div class="flex h-16 w-full items-center justify-between gap-3 px-4 sm:px-8 lg:px-14">
+        <a href="/" class="flex shrink-0 items-center gap-3">
           <span class="block size-2.5" style="background: var(--color-signal);" aria-hidden="true"></span>
           <span class="font-display text-sm font-bold uppercase tracking-[0.3em]">AdepT</span>
         </a>
-        <nav class="flex items-center gap-6" aria-label="Main">
+        <nav class="flex items-center gap-4 sm:gap-6" aria-label="Main">
           {
             NAV.map((item) => (
               <a
                 href={item.href}
-                class="font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-ink"
+                class="hidden font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-ink sm:inline"
               >
                 {item.label}
               </a>
             ))
           }
+          <a
+            href="mailto:hello@adeptproductions.dev?subject=Resume%20request"
+            class="border border-line px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-signal hover:text-ink"
+          >
+            Request dossier
+          </a>
         </nav>
       </div>
     </header>
@@ -53,12 +63,21 @@ const NAV = [
       <slot />
     </main>
 
-    <footer class="mt-20 border-t border-line">
+    <footer class="mt-24 border-t border-line">
       <div class="flex w-full flex-col gap-3 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14">
         <p class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint">
-          © {new Date().getFullYear()} AdepT // me.adeptproductions.dev
+          © {new Date().getFullYear()} AdepT // Designed &amp; built from scratch, self-hosted on my own hardware
         </p>
-        <a href="/admin" class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint hover:text-muted">Admin</a>
+        <p class="flex gap-5 font-mono text-[11px] uppercase tracking-[0.15em]">
+          <a href="https://adeptproductions.dev" class="text-faint hover:text-ink">Studio</a>
+          <a
+            href={`https://github.com/AdeptOfficial/adept.dev/commit/${commit}`}
+            class="text-faint hover:text-ink"
+            title="This exact build's commit"
+          >
+            Mark 2 #{commit}
+          </a>
+        </p>
       </div>
     </footer>
   </body>

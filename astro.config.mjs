@@ -1,8 +1,18 @@
 // @ts-check
+import { execSync } from 'node:child_process';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
+
+// Footer "Mark 2 #<hash>" — baked at build time.
+const commit = (() => {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim();
+  } catch {
+    return 'dev';
+  }
+})();
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,5 +27,8 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
+    define: {
+      __COMMIT__: JSON.stringify(commit),
+    },
   },
 });
