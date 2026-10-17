@@ -49,7 +49,26 @@ const FEATURED = [
 
 const EXPERIENCE = [
   {
-    period: '2024 — PRESENT',
+    period: '2026 — PRESENT',
+    role: 'Software Developer · Enterprise API',
+    org: '[REDACTED]',
+    points: [
+      'Build and maintain MuleSoft applications powering integrations for product teams across the enterprise',
+      "MuleSoft Community of Practice — the dev other devs ping when the integration layer fights back",
+      'Maintainer of Enterprise API Automation: PR-review automation, Jenkins + UrbanCode deploy rails, CLI tooling used daily by internal teams',
+    ],
+  },
+  {
+    period: 'SIDE QUESTS',
+    role: 'Intrapreneur · Internal Apps',
+    org: '[REDACTED]',
+    points: [
+      'Check-In — in-person work tracker adopted by other departments (successfully automated myself out of the office)',
+      'Evidence Builder — AI captures your wins daily, so review season becomes copy-paste into Workday instead of archaeology',
+    ],
+  },
+  {
+    period: '2024 — 2026',
     role: 'Software Developer',
     org: '[REDACTED]',
     points: [
@@ -83,7 +102,7 @@ const EXPERIENCE = [
 ];
 
 const CAPABILITIES = [
-  { title: 'Backend & integrations', body: 'Java, Python/Django, REST APIs, data pipelines that ship with tests.' },
+  { title: 'Backend & integrations', body: 'Java, Python/Django, MuleSoft, REST APIs — pipelines that ship with tests.' },
   { title: 'Self-hosted infrastructure', body: 'Proxmox, Docker, tunnels, DNS — this page is served from hardware I run.' },
   { title: 'Automation', body: 'RPA, n8n workflows, CI — if it happens twice, it gets automated.' },
   { title: 'Community & leadership', body: 'Founded and ran a 2,000-member CS community; teaching is half the fun.' },
@@ -190,13 +209,26 @@ const CAPABILITIES = [
         ))
       }
       <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
+        <p class="font-mono text-[11px] font-bold tracking-[0.2em] sm:col-span-3" style="color: var(--color-signal);">
+          INCOMING 2027
+        </p>
+        <div class="sm:col-span-9">
+          <h3 class="font-display text-lg font-bold">
+            M.S., Computer Science <span class="text-faint">//</span> Georgia Tech — OMSCS
+          </h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Leveling up while shipping. Starts January 2027.</p>
+        </div>
+      </div>
+      <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
         <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">DEC 2023</p>
         <div class="sm:col-span-9">
           <h3 class="font-display text-lg font-bold">
             Honours B.S., Computer Science <span class="text-faint">//</span>
             <span class="redact">[REDACTED] UNIVERSITY</span>
           </h3>
-          <p class="mt-2 text-sm leading-relaxed text-muted">Minor in entrepreneurship. The rest is classified.</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Minor in entrepreneurship. Major GPA 3.7/4.0. The rest is classified.
+          </p>
         </div>
       </div>
     </div>
