@@ -218,6 +218,27 @@ const PALETTE = [
   'var(--color-ink)',
 ];
 
+// Label -> Nerd Font icon (same glyphs as the user's fastfetch config where one exists).
+const NF: Record<string, string> = {
+  OS: '\u{F303}',
+  Board: '\u{F109}',
+  CPU: '\u{F4BC}',
+  GPU: '\u{E266}',
+  Memory: '\u{EFC5}',
+  Displays: '\u{F1104}',
+  Packages: '\u{F03D6}',
+  Terminal: '\u{F489}',
+  Font: '\u{F031}',
+  Theme: '\u{F0E0C}',
+  Hypervisor: '\u{F048B}',
+  Storage: '\u{F02CA}',
+  Backups: '\u{F006F}',
+  Sidekick: '\u{F109}',
+  Network: '\u{F0317}',
+  Stack: '\u{F0328}',
+  Studio: '\u{F0674}',
+};
+
 const EXPERIENCE = [
   {
     period: '2026 — PRESENT',
@@ -460,10 +481,10 @@ const CAPABILITIES = [
               </div>
               <dl>
                 {rig.rows.map(([k, v, kind], i) => (
-                  <div class="grid grid-cols-[1.4rem_6.5rem_1fr] gap-x-1 text-sm leading-6">
+                  <div class="grid grid-cols-[1.4rem_8.5rem_1fr] gap-x-1 text-sm leading-6">
                     <span class={`tree-tick${i === rig.rows.length - 1 ? ' last' : ''}`} aria-hidden="true" />
-                    <dt class="font-mono text-[11px] uppercase leading-6 tracking-[0.15em]" style="color: var(--color-signal);">
-                      {k}
+                    <dt class="whitespace-nowrap font-mono text-[11px] uppercase leading-6 tracking-[0.15em]" style="color: var(--color-signal);">
+                      <span class="nf mr-1.5 text-[13px] normal-case tracking-normal" aria-hidden="true">{NF[k] ?? ''}</span>{k}:
                     </dt>
                     <dd class="leading-6 text-muted">
                       {kind === 'palette' ? (

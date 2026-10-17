@@ -250,3 +250,18 @@ details.decrypt[open] .when-open {
 .tree-tick.last::after {
   display: none;
 }
+
+/* Nerd Font icons for the fastfetch cards — 16-glyph subset of
+   JetBrainsMono Nerd Font (public/fonts/nf-icons.woff2, ~4 KB). */
+@font-face {
+  font-family: 'NF Icons';
+  src: url('/fonts/nf-icons.woff2') format('woff2');
+  font-display: block;
+}
+.nf {
+  font-family: 'NF Icons';
+  font-style: normal;
+  display: inline-block;
+  width: 1.15em;
+  text-align: center;
+}
