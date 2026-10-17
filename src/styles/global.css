@@ -184,3 +184,26 @@ details.decrypt[open] .when-open {
     opacity: 0;
   }
 }
+
+/* ── Playing-card chrome for project cards ── */
+.card-index {
+  position: absolute;
+  z-index: 10;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card-tilt {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1),
+      border-color 0.35s ease;
+  }
+  .group:hover .card-tilt {
+    transform: translateY(-5px) rotate(-1.2deg);
+  }
+}

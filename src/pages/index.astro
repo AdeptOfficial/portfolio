@@ -16,6 +16,8 @@ const shot = (slug: string) => (fs.existsSync(`public/projects/${slug}.png`) ? `
 type Project = {
   slug: string;
   name: string;
+  /** Card rank within the suit; '★' = the Joker. */
+  rank: string;
   status: 'OPERATIONAL' | 'IN DEVELOPMENT' | 'DORMANT' | 'DECOMMISSIONED';
   blurb: string;
   tags: string[];
@@ -28,6 +30,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'adeptlab',
     name: 'AdepTLab',
+    rank: 'A',
     status: 'OPERATIONAL',
     blurb:
       'My homelab: two Proxmox servers running 20+ services (media, photos, AI inference, automation) with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
@@ -37,6 +40,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'studio',
     name: 'adeptproductions.dev',
+    rank: 'K',
     status: 'OPERATIONAL',
     blurb:
       'The studio itself: app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions.',
@@ -47,6 +51,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'status-tracker',
     name: 'Status Tracker',
+    rank: 'Q',
     status: 'OPERATIONAL',
     blurb: 'Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.',
     tags: ['python', 'webhooks', 'self-hosted'],
@@ -55,6 +60,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'tracker-bot',
     name: '[REDACTED] Tracker Bot',
+    rank: 'J',
     status: 'OPERATIONAL',
     blurb: 'Discord bot built from scratch for a [REDACTED] community server: member verification, a recruiter queue, and course records.',
     tags: ['discord.js', 'mongodb'],
@@ -64,6 +70,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'dayplan',
     name: 'dayplan',
+    rank: 'A',
     status: 'IN DEVELOPMENT',
     blurb:
       'AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks. Review, apply atomically, undo as a group.',
@@ -74,6 +81,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'connecthub',
     name: 'ConnectHub',
+    rank: 'K',
     status: 'IN DEVELOPMENT',
     blurb:
       'Real-time chat platform on Bun: Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.',
@@ -84,6 +92,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'ditto-looper',
     name: 'Ditto Looper',
+    rank: 'Q',
     status: 'IN DEVELOPMENT',
     blurb: 'Real-time Android audio looper modeled on a guitar pedal: layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
     tags: ['kotlin', 'android', 'oboe'],
@@ -92,6 +101,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'domain-watcher',
     name: 'Domain Watcher',
+    rank: 'J',
     status: 'IN DEVELOPMENT',
     blurb: 'Daily RDAP checks on domains I want or own. Alerts the day a drop is coming, so I never lose another one by six days.',
     tags: ['rdap', 'n8n', 'self-hosted'],
@@ -100,15 +110,27 @@ const PROJECTS: Project[] = [
   {
     slug: 'vllm',
     name: 'vLLM on an RTX 5090',
+    rank: '10',
     status: 'IN DEVELOPMENT',
     blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine without breaking system Python, CUDA, or drivers.',
     tags: ['vllm', 'cuda', 'benchmarks'],
     href: 'https://github.com/AdeptOfficial/vLLM-test',
   },
+  {
+    slug: 'watch-together',
+    name: 'Watch Together',
+    rank: '9',
+    status: 'IN DEVELOPMENT',
+    blurb:
+      'Self-hosted watch-together for my Jellyfin: synced playback so friends can watch the same thing from anywhere in the world — including behind the Great Firewall.',
+    tags: ['jellyfin', 'sync', 'self-hosted'],
+    href: null,
+  },
   // ── Dormant ──
   {
     slug: 'syna',
     name: 'Syna',
+    rank: '★',
     status: 'DORMANT',
     blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
     tags: ['python', 'llm'],
@@ -118,6 +140,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'devhub',
     name: 'DevHub',
+    rank: 'A',
     status: 'DECOMMISSIONED',
     blurb:
       'Collab project with a friend: a hub for finding projects to contribute to and people to build with, with video calling, real-time chat, and a meetup location finder.',
@@ -127,6 +150,7 @@ const PROJECTS: Project[] = [
   {
     slug: 'adept-dev-mark-1',
     name: 'adept.dev — Mark 1',
+    rank: 'K',
     status: 'DECOMMISSIONED',
     blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2, the one you're reading.",
     tags: ['nextjs', 'vercel'],
@@ -135,11 +159,12 @@ const PROJECTS: Project[] = [
 ];
 
 // Project lifecycle: one vocabulary, one color per stage (all sampled from the brand art).
+// Suits map to stages — four suits, four stages, colors from the brand art.
 const STAGES = [
-  { key: 'OPERATIONAL', color: 'var(--color-signal)', note: 'shipped & running', layout: 'cards' },
-  { key: 'IN DEVELOPMENT', color: 'var(--color-matrix)', note: 'actively being built', layout: 'cards' },
-  { key: 'DORMANT', color: 'var(--color-scarf)', note: 'on the shelf, may return', layout: 'rows' },
-  { key: 'DECOMMISSIONED', color: 'var(--color-crimson)', note: 'retired, kept for the record', layout: 'rows' },
+  { key: 'OPERATIONAL', suit: '♠', color: 'var(--color-signal)', note: 'shipped & running', layout: 'cards' },
+  { key: 'IN DEVELOPMENT', suit: '♥', color: 'var(--color-matrix)', note: 'actively being built', layout: 'cards' },
+  { key: 'DORMANT', suit: '♦', color: 'var(--color-scarf)', note: 'face-down, may re-enter the deck', layout: 'rows' },
+  { key: 'DECOMMISSIONED', suit: '♣', color: 'var(--color-crimson)', note: 'the discard pile', layout: 'rows' },
 ] as const;
 
 // Render [REDACTED] tokens inside text as styled redaction bars.
@@ -364,7 +389,7 @@ const CAPABILITIES = [
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
   >
     <div class="rv">
-      <SectionHead cmd="ls -la sections/3.0_projects/" headline="Projects make perfect" />
+      <SectionHead cmd="deal sections/3.0_projects.deck" headline="The hand I'm playing" />
     </div>
 
     {
@@ -374,14 +399,14 @@ const CAPABILITIES = [
         return (
           <div class="mt-10">
             <h3 class="rv flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.25em]">
-              <span class="size-1.5" style={`background: ${stage.color};`} aria-hidden="true" />
+              <span class="text-sm font-bold" style={`color: ${stage.color};`} aria-hidden="true">{stage.suit}</span>
               <span class="font-bold" style={`color: ${stage.color};`}>{stage.key}</span>
               <span class="text-faint">[{items.length}] // {stage.note}</span>
             </h3>
 
             {stage.layout === 'cards' ? (
               <div class="stagger mt-4 grid gap-4 md:grid-cols-2">
-                {items.map((p, i) => {
+                {items.map((p) => {
                   const Card = p.href ? 'a' : 'div';
                   const image = shot(p.slug);
                   return (
@@ -389,19 +414,32 @@ const CAPABILITIES = [
                       href={p.href ?? undefined}
                       target={p.href?.startsWith('http') && !p.href.includes('adeptproductions.dev') ? '_blank' : undefined}
                       rel={p.href ? 'noreferrer' : undefined}
-                      class="rv-scale group relative flex flex-col overflow-hidden border border-line transition-colors hover:border-muted"
+                      class="rv-scale group block"
+                    >
+                    <div
+                      class="card-tilt relative flex h-full flex-col overflow-hidden border border-line transition-colors group-hover:border-muted"
                       style={`border-top: 2px solid ${stage.color};
                         background: radial-gradient(32rem at top right, color-mix(in srgb, ${stage.color} 7%, var(--color-card)), var(--color-card));`}
                     >
+                      <span class="card-index left-2 top-1.5" style={`color: ${stage.color};`} aria-hidden="true">
+                        {p.rank}
+                        <br />
+                        {p.rank === '★' ? '' : stage.suit}
+                      </span>
+                      <span class="card-index bottom-1.5 right-2 rotate-180" style={`color: ${stage.color};`} aria-hidden="true">
+                        {p.rank}
+                        <br />
+                        {p.rank === '★' ? '' : stage.suit}
+                      </span>
                       {image && <img src={image} alt={`${p.name} screenshot`} class="aspect-video w-full border-b border-line object-cover" />}
                       <span
-                        class="pointer-events-none absolute -right-2 -top-6 select-none font-display text-[6rem] font-bold leading-none opacity-[0.07]"
+                        class="pointer-events-none absolute -right-1 -top-7 select-none font-display text-[7rem] font-bold leading-none opacity-[0.07]"
                         style={`color: ${stage.color};`}
                         aria-hidden="true"
                       >
-                        {String(i + 1).padStart(2, '0')}
+                        {p.rank === '★' ? '★' : stage.suit}
                       </span>
-                      <div class="relative flex flex-1 flex-col p-5">
+                      <div class="relative flex flex-1 flex-col p-5 pl-9 pr-8">
                         <div class="flex items-start justify-between gap-3">
                           <h4 class="font-display text-lg font-bold">
                             {redactParts(p.name).map((part) =>
@@ -426,6 +464,7 @@ const CAPABILITIES = [
                           ))}
                         </div>
                       </div>
+                    </div>
                     </Card>
                   );
                 })}
@@ -438,7 +477,12 @@ const CAPABILITIES = [
                     style={`border-left: 2px solid ${stage.color};`}
                   >
                     <div class="min-w-0">
-                      <h4 class="font-display font-bold">{p.name}</h4>
+                      <h4 class="font-display font-bold">
+                        <span class="mr-2 font-mono text-sm" style={`color: ${stage.color};`}>
+                          {p.rank === '★' ? '★ JOKER' : p.rank + stage.suit}
+                        </span>
+                        {p.name}
+                      </h4>
                       <p class="mt-1 text-sm leading-relaxed text-muted">{p.blurb}</p>
                       <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1">
                         {p.tags.map((t) => (
