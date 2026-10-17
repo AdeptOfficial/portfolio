@@ -226,7 +226,7 @@ details.decrypt[open] .when-open {
   position: absolute;
   left: 0.3rem;
   top: 0.75rem;
-  width: 0.55rem;
+  right: 0.15rem;
   border-top: 1px solid var(--color-line);
 }
 /* first row: spine starts AT the tick (rounded shoulder down) */
@@ -234,7 +234,7 @@ details.decrypt[open] .when-open {
   top: 0.75rem;
   border-top: 1px solid var(--color-line);
   border-top-left-radius: 5px;
-  width: 0.55rem;
+  right: 0.15rem;
 }
 .tree-tick.first::after {
   display: none;
@@ -243,7 +243,7 @@ details.decrypt[open] .when-open {
 .tree-tick.last::before {
   bottom: auto;
   height: 0.75rem;
-  width: 0.55rem;
+  right: 0.15rem;
   border-bottom: 1px solid var(--color-line);
   border-bottom-left-radius: 5px;
 }
