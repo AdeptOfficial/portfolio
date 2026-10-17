@@ -96,7 +96,7 @@ header nav a {
   .rv-blur {
     filter: blur(10px);
   }
-  section.in-view :is(.rv, .rv-left, .rv-scale, .rv-blur) {
+  :is(.rv, .rv-left, .rv-scale, .rv-blur).in-view {
     opacity: 1;
     transform: none;
     filter: none;

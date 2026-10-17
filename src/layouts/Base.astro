@@ -119,28 +119,40 @@ const commit: string = __COMMIT__;
       }
 
       const sections = document.querySelectorAll('main section');
-      const activate = (section: Element) => {
-        section.classList.add('in-view');
-        if (reduced) return;
-        section.querySelectorAll<HTMLElement>('[data-decode]').forEach(decode);
-        section.querySelectorAll<HTMLElement>('[data-type]').forEach(typeOut);
-      };
+      const fxEls = document.querySelectorAll('.rv, .rv-left, .rv-scale, .rv-blur');
 
       if ('IntersectionObserver' in window && !reduced) {
-        const io = new IntersectionObserver(
+        // Motion fires per-element as it scrolls into view — tall sections
+        // cascade with the scroll instead of playing offscreen.
+        const fxIO = new IntersectionObserver(
           (entries) => {
             for (const e of entries) {
               if (e.isIntersecting) {
-                activate(e.target);
-                io.unobserve(e.target);
+                e.target.classList.add('in-view');
+                fxIO.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+        );
+        fxEls.forEach((el) => fxIO.observe(el));
+
+        // Decode/typewriter fire once per section entry.
+        const textIO = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.querySelectorAll<HTMLElement>('[data-decode]').forEach(decode);
+                e.target.querySelectorAll<HTMLElement>('[data-type]').forEach(typeOut);
+                textIO.unobserve(e.target);
               }
             }
           },
           { threshold: 0.15 }
         );
-        sections.forEach((s) => io.observe(s));
+        sections.forEach((s) => textIO.observe(s));
       } else {
-        sections.forEach((s) => s.classList.add('in-view'));
+        fxEls.forEach((el) => el.classList.add('in-view'));
       }
     </script>
   </body>

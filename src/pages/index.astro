@@ -185,7 +185,9 @@ const CAPABILITIES = [
       <SectionHead cmd="less sections/2.0_experience.log" headline="Trial by production" />
     </div>
 
-    <div class="stagger mt-8 space-y-px">
+    <!-- No stagger here: each row triggers on its own scroll entry, so the
+         cascade follows the reader down the tall section. -->
+    <div class="mt-8 space-y-px">
       {
         EXPERIENCE.map((job) => (
           <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
