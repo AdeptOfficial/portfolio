@@ -7,7 +7,7 @@ Guidance for Claude Code in this repository.
 AdepT's personal portfolio ("Mark 2") — a single-page dossier-themed site for
 **me.adeptproductions.dev** (not yet live; dev deploy at http://10.0.2.26/, LXC 226).
 Astro 7 + Node adapter, React islands, Tailwind 4, AdepT design system (shared with
-`../studio`). Branch `astro-rebuild`; GitHub repo is still named `adept.dev` and `main`
+`../studio`). Branch `astro-rebuild`; GitHub repo: `AdeptOfficial/portfolio` (renamed from adept.dev 2026-10-17) and `main`
 still feeds the old Next.js site on Vercel until DNS cutover — don't merge to main.
 
 ## Non-negotiables
