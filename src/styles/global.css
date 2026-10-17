@@ -112,6 +112,66 @@ header nav a {
   .stagger > :nth-child(8) { --d: 0.61s; }
 }
 
+/* Decrypt expander (the About read-more): scanline sweep + top-down unveil */
+details.decrypt summary {
+  list-style: none;
+}
+details.decrypt summary::-webkit-details-marker {
+  display: none;
+}
+details.decrypt .when-open {
+  display: none;
+  color: var(--color-signal);
+}
+details.decrypt[open] .when-closed {
+  display: none;
+}
+details.decrypt[open] .when-open {
+  display: inline;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Closed <details> content isn't rendered, so use keyframes (play on reveal), not transitions. */
+  details.decrypt .expand {
+    position: relative;
+  }
+  details.decrypt[open] .expand {
+    animation: unveil 0.9s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+  }
+  details.decrypt[open] .expand::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    background: var(--color-signal);
+    box-shadow: 0 0 14px var(--color-signal);
+    animation: scan 0.9s cubic-bezier(0.22, 0.9, 0.3, 1) forwards;
+  }
+}
+@keyframes unveil {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    clip-path: inset(0 0 -10% 0);
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes scan {
+  from {
+    top: 0;
+    opacity: 1;
+  }
+  to {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
 /* Blinking terminal cursor */
 .cursor {
   display: inline-block;
