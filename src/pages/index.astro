@@ -4,7 +4,6 @@ import Base from '../layouts/Base.astro';
 import SectionHead from '../components/SectionHead.astro';
 import DiscordAvatar from '../components/DiscordAvatar';
 import NowPlaying from '../components/NowPlaying';
-import Projects from '../components/Projects';
 
 export const prerender = true;
 
@@ -36,6 +35,17 @@ const FEATURED = [
   },
   {
     serial: '003',
+    name: 'AdepTLab',
+    badge: 'LIVE',
+    badgeColor: 'var(--color-signal)',
+    blurb:
+      'My homelab: two Proxmox servers running 20+ services — media, photos, AI inference, automation — with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
+    tags: ['proxmox', 'docker', 'zfs', 'tailscale', 'cloudflare'],
+    href: null,
+    image: shot('adeptlab'),
+  },
+  {
+    serial: '004',
     name: 'adeptproductions.dev',
     badge: 'LIVE',
     badgeColor: 'var(--color-signal)',
@@ -46,6 +56,70 @@ const FEATURED = [
     image: shot('studio'),
   },
 ];
+
+// Hand-picked archive — the source of truth for what's public. Repos without
+// `href` are private and render without a link (never auto-list private repos).
+const ARCHIVE = [
+  {
+    name: 'Ditto Looper',
+    blurb: 'Real-time Android audio looper modeled on a guitar pedal — layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
+    tags: ['kotlin', 'android', 'oboe'],
+    status: 'ACTIVE',
+    href: 'https://github.com/AdeptOfficial/record',
+  },
+  {
+    name: 'Syna',
+    blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
+    tags: ['python', 'llm'],
+    status: 'PAUSED',
+    href: 'https://github.com/AdeptOfficial/Syna',
+  },
+  {
+    name: 'vLLM on an RTX 5090',
+    blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine — without breaking system Python, CUDA, or drivers.',
+    tags: ['vllm', 'cuda', 'benchmarks'],
+    status: 'ACTIVE',
+    href: 'https://github.com/AdeptOfficial/vLLM-test',
+  },
+  {
+    name: 'Status Tracker',
+    blurb: 'Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.',
+    tags: ['python', 'webhooks', 'self-hosted'],
+    status: 'ACTIVE',
+    href: 'https://github.com/AdeptOfficial/status-tracker',
+  },
+  {
+    name: 'Domain Watcher',
+    blurb: 'Daily RDAP checks on domains I want or own — alerts the day a drop is coming, so I never lose another one by six days.',
+    tags: ['rdap', 'n8n', 'self-hosted'],
+    status: 'WIP',
+    href: null,
+  },
+  {
+    name: '[REDACTED] Tracker Bot',
+    blurb: 'Discord bot built from scratch for a [REDACTED] community server — member verification, a recruiter queue, and course records.',
+    tags: ['discord.js', 'mongodb'],
+    status: 'ACTIVE',
+    href: null,
+  },
+  {
+    name: 'adept.dev — Mark 1',
+    blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2 — the one you're reading.",
+    tags: ['nextjs', 'vercel'],
+    status: 'ARCHIVED',
+    href: null,
+  },
+];
+
+const STATUS_COLOR: Record<string, string> = {
+  ACTIVE: 'var(--color-signal)',
+  WIP: 'var(--color-muted)',
+  PAUSED: 'var(--color-faint)',
+  ARCHIVED: 'var(--color-faint)',
+};
+
+// Render [REDACTED] tokens inside text as styled redaction bars.
+const redactParts = (text: string) => text.split(/(\[REDACTED\])/);
 
 const EXPERIENCE = [
   {
@@ -270,11 +344,13 @@ const CAPABILITIES = [
     </div>
 
     <!-- Featured tier -->
-    <div class="stagger mt-8 grid gap-4 lg:grid-cols-3">
+    <div class="stagger mt-8 grid gap-4 md:grid-cols-2">
       {
-        FEATURED.map((p) => (
-          <a
-            href={p.href}
+        FEATURED.map((p) => {
+          const Card = p.href ? 'a' : 'div';
+          return (
+          <Card
+            href={p.href ?? undefined}
             class="rv-scale group flex flex-col border border-line bg-card transition-colors hover:border-muted"
           >
             {p.image ? (
@@ -311,44 +387,60 @@ const CAPABILITIES = [
                 ))}
               </div>
             </div>
-          </a>
-        ))
+          </Card>
+          );
+        })
       }
     </div>
 
-    <!-- Archive tier — live from GitHub + statics -->
-    <div class="rv" style="--d: 0.45s;">
-      <h3 class="mt-10 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">The archive</h3>
-      <div class="mt-3">
-        <Projects client:visible />
-        <div class="mt-px grid gap-px">
-          <div class="flex flex-wrap items-center justify-between gap-3 border border-line bg-card px-5 py-4">
-            <div>
-              <h4 class="font-display font-bold">Advanced Utility Discord Bot</h4>
-              <p class="mt-1 text-sm text-muted">
-                Serving one of the largest <span class="redact">[REDACTED]</span>-university Discord servers since 2021 —
-                verification, recruiter queues, course records.
+    <!-- Archive tier — hand-picked (ARCHIVE above); private projects have no link -->
+    <h3 class="rv mt-10 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">The archive</h3>
+    <div class="mt-3 grid gap-px">
+      {
+        ARCHIVE.map((p) => (
+          <div class="rv flex flex-wrap items-center justify-between gap-3 border border-line bg-card px-5 py-4 transition-colors hover:border-muted">
+            <div class="min-w-0">
+              <h4 class="font-display font-bold">
+                {redactParts(p.name).map((part) =>
+                  part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
+                )}
+              </h4>
+              <p class="mt-1 text-sm leading-relaxed text-muted">
+                {redactParts(p.blurb).map((part) =>
+                  part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
+                )}
               </p>
-              <div class="mt-2 flex gap-x-3">
-                <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#discord.js</span>
-                <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#mongodb</span>
+              <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+                {p.tags.map((t) => (
+                  <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
+                ))}
               </div>
             </div>
-            <span class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-muted">ACTIVE</span>
-          </div>
-          <div class="flex flex-wrap items-center justify-between gap-3 border border-line bg-card px-5 py-4">
-            <div>
-              <h4 class="font-display font-bold">adept.dev — Mark 1</h4>
-              <p class="mt-1 text-sm text-muted">The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2 — the one you're reading.</p>
-              <div class="mt-2 flex gap-x-3">
-                <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#nextjs</span>
-                <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#vercel</span>
-              </div>
+            <div class="flex shrink-0 items-center gap-3">
+              <span
+                class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em]"
+                style={`color: ${STATUS_COLOR[p.status]};`}
+              >
+                {p.status}
+              </span>
+              {p.href ? (
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="font-mono text-[11px] uppercase tracking-[0.15em] text-muted hover:text-ink"
+                >
+                  GitHub ↗
+                </a>
+              ) : (
+                <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint" title="Private repository">
+                  Private
+                </span>
+              )}
             </div>
-            <span class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-faint">ARCHIVED</span>
           </div>
-        </div>
-      </div>
+        ))
+      }
     </div>
   </section>
 
