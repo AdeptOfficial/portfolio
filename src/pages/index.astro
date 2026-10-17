@@ -5,7 +5,6 @@ import SectionHead from '../components/SectionHead.astro';
 import DiscordAvatar from '../components/DiscordAvatar';
 import NowPlaying from '../components/NowPlaying';
 
-export const prerender = true;
 
 // Screenshot slots activate when files land in public/projects/<slug>.png.
 const shot = (slug: string) => (fs.existsSync(`public/projects/${slug}.png`) ? `/projects/${slug}.png` : null);
@@ -294,10 +293,22 @@ const EXPERIENCE = [
 ];
 
 const CAPABILITIES = [
-  { title: 'Backend & integrations', body: 'Java, Python/Django, MuleSoft, REST APIs — pipelines that ship with tests.' },
-  { title: 'Self-hosted infrastructure', body: 'Proxmox, Docker, tunnels, DNS — this page is served from hardware I run.' },
-  { title: 'Automation', body: 'RPA, n8n workflows, CI — if it happens twice, it gets automated.' },
-  { title: 'Community & leadership', body: 'Founded and ran a 2,000-member CS community; teaching is half the fun.' },
+  {
+    title: 'Full-stack engineering',
+    body: 'TypeScript, React, Astro & Tailwind up front; Java, Python/Django & MuleSoft behind; Postgres, SQLite & Mongo underneath. Pipelines ship with tests.',
+  },
+  {
+    title: 'Self-hosted infrastructure',
+    body: "Proxmox, Docker, ZFS, Cloudflare Tunnels — everything you're reading is served from hardware I run.",
+  },
+  {
+    title: 'Automation & tooling',
+    body: 'n8n, RPA, Jenkins & UCD pipelines, internal CLI tools — if it happens twice, it gets automated.',
+  },
+  {
+    title: 'Community & leadership',
+    body: 'Founded a 2,000-member CS community; the dev other devs ask first. Teaching is half the fun.',
+  },
 ];
 ---
 

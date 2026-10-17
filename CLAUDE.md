@@ -4,11 +4,12 @@ Guidance for Claude Code in this repository.
 
 ## Project Overview
 
-AdepT's personal portfolio ("Mark 2") — a single-page dossier-themed site for
-**me.adeptproductions.dev** (not yet live; dev deploy at http://10.0.2.26/, LXC 226).
+AdepT's personal portfolio ("Mark 2") — a single-page dossier-themed site, LIVE at
+**https://me.adeptproductions.dev** (prod LXC 126; dev deploy at http://10.0.2.26/, LXC 226).
 Astro 7 + Node adapter, React islands, Tailwind 4, AdepT design system (shared with
-`../studio`). Branch `astro-rebuild`; GitHub repo is still named `adept.dev` and `main`
-still feeds the old Next.js site on Vercel until DNS cutover — don't merge to main.
+`../studio`). Branch `astro-rebuild`; GitHub repo `AdeptOfficial/portfolio` (renamed from
+adept.dev 2026-10-17). `main` is the frozen Next.js Mark 1 (Vercel project paused) —
+don't merge to main.
 
 ## Non-negotiables
 
@@ -45,6 +46,23 @@ npm run preview    # node ./dist/server/entry.mjs
 
 ## Deploy (DEV)
 
-Procedure in `~/git/homeserver/configs/dev/services/adept.dev/README.md` — rsync to the
+Procedure in `~/git/homeserver/configs/dev/services/portfolio/README.md` — rsync to the
 Proxmox host, wipe-except-`.env`, tar into LXC 226, `docker compose up -d --build`.
 Prod (LXC 126 + tunnel route) is a planned, user-authorized-only step.
+
+## Project-card lifecycle — status promotion is USER-GATED (2026-10-17 rule)
+
+A card's suit/status in `PROJECTS` mirrors the app's real deployment stage, and **only
+the user promotes it**:
+
+1. Idea created → idea-stage card (matching the studio catalogue).
+2. Built + tested on the **DEV server only** → ♥ IN DEVELOPMENT. Running clean on dev
+   is NOT released.
+3. The user ALONE confirms it's good and says "deploy to prod" — no agent decides this.
+4. Only after prod is actually deployed → ♠ OPERATIONAL. Any announcement copy still
+   goes past the user before posting.
+
+Never on your own initiative: flip a card's suit/status forward, add an `href` to a
+repo, or write "now open source / operational" blurb text. (An agent once dealt Domain
+Watcher into spades with a repo link while it was still in dev testing — rolled back
+across prod. Don't be that agent.)
