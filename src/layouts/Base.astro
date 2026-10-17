@@ -82,19 +82,61 @@ const commit: string = __COMMIT__;
     </footer>
 
     <script>
-      // Section entrance reveals; everything stays visible if JS/IO is unavailable.
-      const sections = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
+      // ── Section FX engine ──────────────────────────────────────────
+      // Sections get .in-view on first entry (CSS handles rv-* motion);
+      // [data-decode] text scrambles into place, [data-type] prompts
+      // type out. Without JS or with reduced-motion, full text just shows.
+      const GLYPHS = '!<>-_\\/[]{}=+*^?#░▒▓01';
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function decode(el: HTMLElement) {
+        const text = el.textContent ?? '';
+        const total = Math.max(24, text.length * 2.2);
+        let frame = 0;
+        const tick = () => {
+          frame++;
+          const resolved = Math.floor((frame / total) * text.length);
+          let out = '';
+          for (let i = 0; i < text.length; i++) {
+            if (text[i] === ' ' || i < resolved) out += text[i];
+            else out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          }
+          el.textContent = out;
+          if (frame < total) requestAnimationFrame(tick);
+          else el.textContent = text;
+        };
+        tick();
+      }
+
+      function typeOut(el: HTMLElement) {
+        const text = el.getAttribute('data-type') ?? '';
+        let i = 0;
+        el.textContent = '';
+        const iv = setInterval(() => {
+          el.textContent = text.slice(0, ++i);
+          if (i >= text.length) clearInterval(iv);
+        }, 26);
+      }
+
+      const sections = document.querySelectorAll('main section');
+      const activate = (section: Element) => {
+        section.classList.add('in-view');
+        if (reduced) return;
+        section.querySelectorAll<HTMLElement>('[data-decode]').forEach(decode);
+        section.querySelectorAll<HTMLElement>('[data-type]').forEach(typeOut);
+      };
+
+      if ('IntersectionObserver' in window && !reduced) {
         const io = new IntersectionObserver(
           (entries) => {
             for (const e of entries) {
               if (e.isIntersecting) {
-                e.target.classList.add('in-view');
+                activate(e.target);
                 io.unobserve(e.target);
               }
             }
           },
-          { threshold: 0.12 }
+          { threshold: 0.15 }
         );
         sections.forEach((s) => io.observe(s));
       } else {
