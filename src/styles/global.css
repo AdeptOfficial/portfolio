@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* AdepT design system — shared with the adeptproductions studio site */
+@theme {
+  --font-display: 'Space Grotesk Variable', ui-sans-serif, sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --color-base: #0a1014;
+  --color-surface: #0e151b;
+  --color-card: #111a21;
+  --color-card-hover: #16222b;
+  --color-line: #203039;
+
+  --color-ink: #eff8fa;
+  --color-muted: #aec3cd;
+  --color-faint: #7e95a0;
+
+  --color-signal: #3fd4e6;
+  --color-magenta: #e359c9;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: var(--color-signal);
+  color: var(--color-base);
+}
+
+.overline {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}

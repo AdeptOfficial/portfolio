@@ -1,47 +1,30 @@
 {
   "name": "adept.dev",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "node ./dist/server/entry.mjs",
+    "astro": "astro"
   },
   "dependencies": {
-    "@eslint/config-array": "^0.20.0",
-    "@eslint/object-schema": "^2.1.6",
-    "@supabase/auth-helpers-nextjs": "^0.10.0",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/kv": "^3.0.0",
-    "adept.dev": "file:",
-    "axios": "^1.7.2",
-    "cookie": "^1.0.2",
-    "date-fns": "^4.1.0",
-    "framer-motion": "^12.6.3",
-    "glob": "^11.0.1",
-    "inflight": "^1.0.6",
-    "lru-cache": "^11.1.0",
-    "next": "^14.2.35",
-    "next-auth": "^4.24.11",
-    "node-cache": "^5.1.2",
-    "react": "^18",
-    "react-big-calendar": "^1.18.0",
-    "react-dom": "^18",
-    "rimraf": "^6.0.1"
+    "@astrojs/node": "^11.1.8",
+    "@astrojs/react": "^7.1.0",
+    "@fontsource-variable/inter": "^5.0.0",
+    "@fontsource-variable/jetbrains-mono": "^5.0.0",
+    "@fontsource-variable/space-grotesk": "^5.0.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^7.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
-    "@types/cookie": "^0.6.0",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-big-calendar": "^1.16.1",
-    "@types/react-dom": "^18",
-    "eslint": "^8.0.0",
-    "eslint-config-next": "14.2.4",
-    "postcss": "^8",
-    "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.6.5",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.6.0"
   }
 }
