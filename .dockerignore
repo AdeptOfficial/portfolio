@@ -1,0 +1,11 @@
+node_modules
+dist
+.astro
+.next
+.git
+app
+components
+lib
+middleware.ts
+package.nextjs.json.bak
+.env*

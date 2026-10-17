@@ -1,0 +1,13 @@
+services:
+  site:
+    build: .
+    image: adept-dev-site:dev
+    container_name: adept-dev-site
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    env_file:
+      # Secrets (Spotify/Discord/GitHub/Supabase) — create .env next to this file.
+      # The site runs without it; the live widgets just stay idle.
+      - path: .env
+        required: false
