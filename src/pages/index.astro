@@ -1,29 +1,217 @@
 ---
+import fs from 'node:fs';
 import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
 import DiscordAvatar from '../components/DiscordAvatar';
 import NowPlaying from '../components/NowPlaying';
-import Projects from '../components/Projects';
 
 export const prerender = true;
+
+// Featured tier — screenshot slots activate when files land in public/projects/.
+const shot = (slug: string) => (fs.existsSync(`public/projects/${slug}.png`) ? `/projects/${slug}.png` : null);
+
+const FEATURED = [
+  {
+    serial: '001',
+    name: 'dayplan',
+    badge: 'IN DEVELOPMENT',
+    blurb:
+      'AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks — review, apply atomically, undo as a group.',
+    tags: ['react', 'sqlite', 'ai-assistant', 'self-hosted'],
+    href: 'https://adeptproductions.dev/apps/dayplan/',
+    image: shot('dayplan'),
+  },
+  {
+    serial: '002',
+    name: 'ConnectHub',
+    badge: 'IN DEVELOPMENT',
+    blurb:
+      'Real-time chat platform on Bun — Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.',
+    tags: ['bun', 'websockets', 'e2ee'],
+    href: 'https://adeptproductions.dev/apps/connecthub/',
+    image: shot('connecthub'),
+  },
+  {
+    serial: '003',
+    name: 'AdepTLab',
+    badge: 'OPERATIONAL',
+    blurb:
+      'My homelab: two Proxmox servers running 20+ services — media, photos, AI inference, automation — with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
+    tags: ['proxmox', 'docker', 'zfs', 'tailscale', 'cloudflare'],
+    href: null,
+    image: shot('adeptlab'),
+  },
+  {
+    serial: '004',
+    name: 'adeptproductions.dev',
+    badge: 'OPERATIONAL',
+    blurb:
+      'The studio itself — app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions.',
+    tags: ['astro', 'tailwind', 'docker', 'self-hosted'],
+    href: 'https://adeptproductions.dev',
+    image: shot('studio'),
+  },
+];
+
+// Hand-picked archive — the source of truth for what's public. Repos without
+// `href` are private and render without a link (never auto-list private repos).
+const ARCHIVE = [
+  {
+    name: 'Ditto Looper',
+    blurb: 'Real-time Android audio looper modeled on a guitar pedal — layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
+    tags: ['kotlin', 'android', 'oboe'],
+    status: 'IN DEVELOPMENT',
+    href: 'https://github.com/AdeptOfficial/record',
+  },
+  {
+    name: 'Syna',
+    blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
+    tags: ['python', 'llm'],
+    status: 'DORMANT',
+    href: 'https://github.com/AdeptOfficial/Syna',
+  },
+  {
+    name: 'vLLM on an RTX 5090',
+    blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine — without breaking system Python, CUDA, or drivers.',
+    tags: ['vllm', 'cuda', 'benchmarks'],
+    status: 'IN DEVELOPMENT',
+    href: 'https://github.com/AdeptOfficial/vLLM-test',
+  },
+  {
+    name: 'Status Tracker',
+    blurb: 'Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.',
+    tags: ['python', 'webhooks', 'self-hosted'],
+    status: 'OPERATIONAL',
+    href: 'https://github.com/AdeptOfficial/status-tracker',
+  },
+  {
+    name: 'Domain Watcher',
+    blurb: 'Daily RDAP checks on domains I want or own — alerts the day a drop is coming, so I never lose another one by six days.',
+    tags: ['rdap', 'n8n', 'self-hosted'],
+    status: 'IN DEVELOPMENT',
+    href: null,
+  },
+  {
+    name: '[REDACTED] Tracker Bot',
+    blurb: 'Discord bot built from scratch for a [REDACTED] community server — member verification, a recruiter queue, and course records.',
+    tags: ['discord.js', 'mongodb'],
+    status: 'OPERATIONAL',
+    href: null,
+  },
+  {
+    name: 'DevHub',
+    blurb:
+      'Collab project with a friend: a hub for finding projects to contribute to and people to build with — video calling, real-time chat, and a meetup location finder.',
+    tags: ['django', 'channels', 'celery', 'redis', 'docker'],
+    status: 'DECOMMISSIONED',
+    href: null,
+  },
+  {
+    name: 'adept.dev — Mark 1',
+    blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2 — the one you're reading.",
+    tags: ['nextjs', 'vercel'],
+    status: 'DECOMMISSIONED',
+    href: null,
+  },
+];
+
+// Project lifecycle — one vocabulary for badges and grouping.
+const STAGES = [
+  { key: 'OPERATIONAL', color: 'var(--color-signal)', note: 'shipped & running' },
+  { key: 'IN DEVELOPMENT', color: 'var(--color-ink)', note: 'actively being built' },
+  { key: 'DORMANT', color: 'var(--color-muted)', note: 'on the shelf, may return' },
+  { key: 'DECOMMISSIONED', color: 'var(--color-faint)', note: 'retired, kept for the record' },
+];
+const STATUS_COLOR: Record<string, string> = Object.fromEntries(STAGES.map((st) => [st.key, st.color]));
+
+// Render [REDACTED] tokens inside text as styled redaction bars.
+const redactParts = (text: string) => text.split(/(\[REDACTED\])/);
+
+const EXPERIENCE = [
+  {
+    period: '2026 — PRESENT',
+    role: 'Software Developer · Enterprise API',
+    org: '[REDACTED]',
+    points: [
+      'Build and maintain MuleSoft applications powering integrations for product teams across the enterprise',
+      "MuleSoft Community of Practice — the dev other devs ping when the integration layer fights back",
+      'Maintainer of Enterprise API Automation: PR-review automation, Jenkins + UrbanCode deploy rails, CLI tooling used daily by internal teams',
+    ],
+  },
+  {
+    period: 'SIDE QUESTS',
+    role: 'Intrapreneur · Internal Apps',
+    org: '[REDACTED]',
+    points: [
+      'Check-In — in-person work tracker adopted by other departments (successfully automated myself out of the office)',
+      'Evidence Builder — AI captures your wins daily, so review season becomes copy-paste into Workday instead of archaeology',
+    ],
+  },
+  {
+    period: '2024 — 2026',
+    role: 'Software Developer',
+    org: '[REDACTED]',
+    points: [
+      'Enterprise integration flows moving data between internal systems and product teams — transformation, validation, 100% automated test coverage',
+      'Capacity dashboards for monitoring server usage and forecasting demand',
+    ],
+  },
+  {
+    period: '2023',
+    role: 'Software Developer Intern',
+    org: '[REDACTED]',
+    points: ['RPA automation initiatives — internal storage and caching upkeep inside a virtual desktop environment'],
+  },
+  {
+    period: '2022',
+    role: 'Software Developer Intern',
+    org: '[REDACTED]',
+    points: [
+      'Legacy Java framework migration — eliminating technical debt',
+      'Devcontainer-based test development to cut onboarding time for future developers',
+    ],
+  },
+  {
+    period: '2020 — 2023',
+    role: 'Founder & President',
+    org: 'Trackers @ [REDACTED]',
+    points: [
+      'Built a central hub for CS students — grown to 2,000+ members, with workshops and networking events through every academic year',
+    ],
+  },
+];
+
+const CAPABILITIES = [
+  { title: 'Backend & integrations', body: 'Java, Python/Django, MuleSoft, REST APIs — pipelines that ship with tests.' },
+  { title: 'Self-hosted infrastructure', body: 'Proxmox, Docker, tunnels, DNS — this page is served from hardware I run.' },
+  { title: 'Automation', body: 'RPA, n8n workflows, CI — if it happens twice, it gets automated.' },
+  { title: 'Community & leadership', body: 'Founded and ran a 2,000-member CS community; teaching is half the fun.' },
+];
 ---
 
 <Base title="AdepT — Design. Code. Ship. Repeat.">
-  <!-- Hero -->
-  <section class="mx-auto grid max-w-5xl items-center gap-10 pt-16 sm:pt-24 lg:grid-cols-12">
+  <!-- Hero — decode sequence -->
+  <section
+    class="mx-auto grid min-h-[calc(100svh-4rem)] max-w-5xl content-center items-center gap-10 py-12 lg:grid-cols-12"
+  >
     <div class="lg:col-span-7">
-      <p class="overline" style="color: var(--color-signal);">// Design. Code. Ship. Repeat.</p>
-      <h1 class="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight sm:text-7xl">
-        Hey, I'm<br /><span class="text-muted">AdepT</span>
-      </h1>
-      <p class="mt-6 max-w-md text-xl leading-relaxed text-ink/90">
-        Computer science student &amp; founder of <a href="https://adeptproductions.dev" class="underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a>.
+      <p class="overline">
+        <span class="text-faint">adept@lab:~$</span>
+        <span data-type="./init --dossier">./init --dossier</span><span class="cursor" aria-hidden="true">▋</span>
       </p>
-      <p class="mt-4 max-w-md leading-relaxed text-muted">
-        I build small, focused software — driven by the belief that there's always a challenge greater
-        than the one you're currently facing, so why be afraid now?
+      <h1 class="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight sm:text-7xl">
+        <span data-decode>Hi there,</span><br />
+        <span data-decode class="text-muted">I'm AdepT.</span>
+      </h1>
+      <p class="rv mt-6 max-w-md text-xl leading-relaxed text-ink/90" style="--d: 0.45s;">
+        Software developer at <span class="redact">[REDACTED]</span> &amp; founder of
+        <a href="https://adeptproductions.dev" class="underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a>.
+      </p>
+      <p class="rv mt-4 max-w-md leading-relaxed text-muted" style="--d: 0.6s;">
+        I build small, focused software — and self-host everything I can get away with.
       </p>
     </div>
-    <div class="flex flex-col items-center gap-6 lg:col-span-5">
+    <div class="rv flex flex-col items-center gap-6 lg:col-span-5" style="--d: 0.75s;">
       <DiscordAvatar client:load />
       <div class="w-full max-w-xs">
         <NowPlaying client:load />
@@ -31,14 +219,274 @@ export const prerender = true;
     </div>
   </section>
 
-  <!-- Projects -->
-  <section id="projects" class="mx-auto max-w-5xl scroll-mt-24 pt-20">
-    <div class="border-t border-line pt-6">
-      <p class="overline">01 / GitHub</p>
-      <h2 class="mt-3 font-display text-3xl font-bold uppercase tracking-wide">Projects</h2>
+  <!-- 1.0 ABOUT — slides in from the left, like a file opening -->
+  <section
+    id="about"
+    class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
+  >
+    <div class="rv-left">
+      <SectionHead cmd="cat sections/1.0_about.md" headline="Why be afraid now?" />
     </div>
-    <div class="mt-8">
-      <Projects client:visible />
+    <div class="rv-left mt-6 max-w-2xl space-y-4 leading-relaxed text-muted" style="--d: 0.2s;">
+      <p>
+        I'm driven by a simple belief: <strong class="text-ink">there's always a challenge greater than the one
+        you're currently facing — so why be afraid now?</strong> That's carried me from running a
+        2,000-member computer science community to shipping enterprise integrations by day and building an
+        independent software studio by night.
+      </p>
+      <details class="decrypt">
+        <summary
+          class="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-faint transition-colors hover:text-ink"
+        >
+          <span class="when-closed">▸ sudo decrypt about.full.enc</span>
+          <span class="when-open">▾ // decrypted — clearance granted</span>
+        </summary>
+        <div class="expand mt-4 space-y-4 border-l border-line pl-5">
+          <p>
+            I'm an entrepreneur at heart. Every community I'm part of has pain points hiding in plain
+            sight — and I can't <em>not</em> build the fix. That instinct became a 2,000-member hub for
+            CS students who needed a place to land, co-founded ventures in consumer tech and campus food
+            access (names <span class="redact">[REDACTED]</span>), and internal tools my coworkers now
+            use every day — including one that automated my own desk out of the office.
+          </p>
+          <p>
+            <a href="https://adeptproductions.dev" class="text-ink underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a>
+            is that same instinct, aimed outward: focused tools for real problems, honest dev notes on
+            every app, and educational tech media. Everything runs on hardware I manage myself, from the
+            hypervisor up — because the homelab community has pain points too.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 2.0 EXPERIENCE — log replaying: rows cascade in -->
+  <section
+    id="experience"
+    class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
+  >
+    <div class="rv">
+      <SectionHead cmd="less sections/2.0_experience.log" headline="Trial by production" />
+    </div>
+
+    <!-- No stagger here: each row triggers on its own scroll entry, so the
+         cascade follows the reader down the tall section. -->
+    <div class="mt-8 space-y-px">
+      {
+        EXPERIENCE.map((job) => (
+          <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
+            <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">{job.period}</p>
+            <div class="sm:col-span-9">
+              <h3 class="font-display text-lg font-bold">
+                {job.role} <span class="text-faint">//</span> <span class="redact">{job.org}</span>
+              </h3>
+              <ul class="mt-2 space-y-1 text-sm leading-relaxed text-muted">
+                {job.points.map((pt) => (
+                  <li class="flex gap-2">
+                    <span class="text-faint" aria-hidden="true">
+                      —
+                    </span>
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))
+      }
+      <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
+        <p class="font-mono text-[11px] font-bold tracking-[0.2em] sm:col-span-3" style="color: var(--color-signal);">
+          INCOMING 2027
+        </p>
+        <div class="sm:col-span-9">
+          <h3 class="font-display text-lg font-bold">
+            M.S., Computer Science <span class="text-faint">//</span>
+            <span class="redact">[REDACTED] — ONLINE</span>
+          </h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Leveling up while shipping. Starts January 2027.</p>
+        </div>
+      </div>
+      <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
+        <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">DEC 2023</p>
+        <div class="sm:col-span-9">
+          <h3 class="font-display text-lg font-bold">
+            Honours B.S., Computer Science <span class="text-faint">//</span>
+            <span class="redact">[REDACTED] UNIVERSITY</span>
+          </h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Minor in entrepreneurship. Major GPA 3.7/4.0. The rest is classified.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stagger mt-8 grid gap-px sm:grid-cols-2">
+      {
+        CAPABILITIES.map((cap) => (
+          <div class="rv-scale border border-line bg-card p-5">
+            <h3 class="font-display font-bold">{cap.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{cap.body}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <a
+      href="mailto:hello@adeptproductions.dev?subject=Resume%20request"
+      class="rv mt-8 inline-block self-start border border-ink bg-ink px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.2em] transition-colors hover:border-signal hover:bg-signal"
+      style="color: var(--color-base); --d: 0.7s;"
+    >
+      Request the full dossier →
+    </a>
+  </section>
+
+  <!-- 3.0 PROJECTS — cards dealt onto the table -->
+  <section
+    id="projects"
+    class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
+  >
+    <div class="rv">
+      <SectionHead cmd="ls -la sections/3.0_projects/" headline="Projects make perfect" />
+    </div>
+
+    <!-- Featured tier -->
+    <div class="stagger mt-8 grid gap-4 md:grid-cols-2">
+      {
+        FEATURED.map((p) => {
+          const Card = p.href ? 'a' : 'div';
+          return (
+          <Card
+            href={p.href ?? undefined}
+            class="rv-scale group flex flex-col border border-line bg-card transition-colors hover:border-muted"
+          >
+            {p.image ? (
+              <img src={p.image} alt={`${p.name} screenshot`} class="aspect-video w-full border-b border-line object-cover" />
+            ) : (
+              <div
+                class="relative flex aspect-video w-full items-end overflow-hidden border-b border-line p-4"
+                style="background: radial-gradient(28rem at top right, color-mix(in srgb, var(--color-signal) 12%, var(--color-surface)), var(--color-surface));"
+              >
+                <span
+                  class="pointer-events-none absolute -right-2 -top-8 select-none font-display text-[7rem] font-bold leading-none opacity-10"
+                  style="color: var(--color-signal);"
+                  aria-hidden="true"
+                >
+                  {p.serial}
+                </span>
+                <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-faint">{p.serial} / preview pending</span>
+              </div>
+            )}
+            <div class="flex flex-1 flex-col p-5">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="font-display text-lg font-bold">{p.name}</h3>
+                <span
+                  class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em]"
+                  style={`color: ${STATUS_COLOR[p.badge]};`}
+                >
+                  {p.badge}
+                </span>
+              </div>
+              <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{p.blurb}</p>
+              <div class="mt-4 flex flex-wrap gap-x-3 gap-y-1">
+                {p.tags.map((t) => (
+                  <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
+                ))}
+              </div>
+            </div>
+          </Card>
+          );
+        })
+      }
+    </div>
+
+    <!-- Other operations — hand-picked (ARCHIVE above), grouped by lifecycle stage;
+         private projects have no link -->
+    <h3 class="rv mt-12 font-display text-xl font-bold uppercase tracking-wide">Other operations</h3>
+    {
+      STAGES.map((stage) => {
+        const items = ARCHIVE.filter((p) => p.status === stage.key);
+        if (items.length === 0) return null;
+        return (
+          <div class="mt-6">
+            <h4 class="rv flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
+              <span class="size-1.5" style={`background: ${stage.color};`} aria-hidden="true" />
+              <span style={`color: ${stage.color};`}>{stage.key}</span>
+              <span class="text-faint">[{items.length}] // {stage.note}</span>
+            </h4>
+            <div class="mt-3 grid gap-px">
+      {
+        items.map((p) => (
+          <div class="rv flex flex-wrap items-center justify-between gap-3 border border-line bg-card px-5 py-4 transition-colors hover:border-muted">
+            <div class="min-w-0">
+              <h4 class="font-display font-bold">
+                {redactParts(p.name).map((part) =>
+                  part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
+                )}
+              </h4>
+              <p class="mt-1 text-sm leading-relaxed text-muted">
+                {redactParts(p.blurb).map((part) =>
+                  part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
+                )}
+              </p>
+              <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+                {p.tags.map((t) => (
+                  <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">#{t}</span>
+                ))}
+              </div>
+            </div>
+            <div class="flex shrink-0 items-center gap-3">
+              {p.href ? (
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="font-mono text-[11px] uppercase tracking-[0.15em] text-muted hover:text-ink"
+                >
+                  GitHub ↗
+                </a>
+              ) : (
+                <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint" title="Private repository">
+                  Private
+                </span>
+              )}
+            </div>
+          </div>
+        ))
+      }
+            </div>
+          </div>
+        );
+      })
+    }
+  </section>
+
+  <!-- 4.0 CONTACT — signal locking on: blur to sharp -->
+  <section
+    id="contact"
+    class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
+  >
+    <div class="rv-blur">
+      <SectionHead cmd="./open_channel.sh --secure" headline="Open a channel" />
+    </div>
+    <p class="rv-blur mt-6 max-w-xl leading-relaxed text-muted" style="--d: 0.2s;">
+      Questions, collaborations, or just want to compare homelab notes — the inbox is open.
+    </p>
+    <div class="rv-blur mt-8 flex flex-wrap gap-3" style="--d: 0.35s;">
+      <a
+        href="mailto:hello@adeptproductions.dev"
+        class="border border-ink bg-ink px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.2em] transition-colors hover:border-signal hover:bg-signal"
+        style="color: var(--color-base);"
+      >
+        hello@adeptproductions.dev
+      </a>
+      <a
+        href="https://github.com/AdeptOfficial"
+        target="_blank"
+        rel="noreferrer"
+        class="border border-line px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-muted hover:text-ink"
+      >
+        GitHub // AdeptOfficial
+      </a>
     </div>
   </section>
 </Base>
