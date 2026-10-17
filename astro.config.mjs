@@ -10,6 +10,8 @@ export default defineConfig({
   // Server output: API routes (Spotify/Discord/GitHub) + admin need a runtime.
   // Static-able pages are prerendered individually via `export const prerender = true`.
   output: 'server',
+  // Default HTML compression swallows spaces around inline elements.
+  compressHTML: false,
   adapter: node({ mode: 'standalone' }),
   integrations: [react()],
   vite: {
