@@ -184,3 +184,84 @@ details.decrypt[open] .when-open {
     opacity: 0;
   }
 }
+
+/* ── Playing-card chrome for project cards ── */
+.card-index {
+  position: absolute;
+  z-index: 10;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card-tilt {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1),
+      border-color 0.35s ease;
+  }
+  .group:hover .card-tilt {
+    transform: translateY(-5px) rotate(-1.2deg);
+  }
+}
+
+/* fastfetch tree connectors — CSS-drawn so the spine stays continuous
+   across wrapped lines (font box-drawing glyphs can't). */
+.tree-tick {
+  position: relative;
+}
+.tree-tick::before {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--color-line);
+}
+.tree-tick::after {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 0.75rem;
+  right: 0.15rem;
+  border-top: 1px solid var(--color-line);
+}
+/* first row: spine starts AT the tick (rounded shoulder down) */
+.tree-tick.first::before {
+  top: 0.75rem;
+  border-top: 1px solid var(--color-line);
+  border-top-left-radius: 5px;
+  right: 0.15rem;
+}
+.tree-tick.first::after {
+  display: none;
+}
+/* last row: spine ends at the tick (rounded elbow) */
+.tree-tick.last::before {
+  bottom: auto;
+  height: 0.75rem;
+  right: 0.15rem;
+  border-bottom: 1px solid var(--color-line);
+  border-bottom-left-radius: 5px;
+}
+.tree-tick.last::after {
+  display: none;
+}
+
+/* Nerd Font icons for the fastfetch cards — 16-glyph subset of
+   JetBrainsMono Nerd Font (public/fonts/nf-icons.woff2, ~4 KB). */
+@font-face {
+  font-family: 'NF Icons';
+  src: url('/fonts/nf-icons.woff2') format('woff2');
+  font-display: block;
+}
+.nf {
+  font-family: 'NF Icons';
+  font-style: normal;
+  display: inline-block;
+  width: 1.15em;
+  text-align: center;
+}
