@@ -1,56 +1,50 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code in this repository.
 
 ## Project Overview
 
-Personal portfolio and admin dashboard built with Next.js 14 (App Router). Features a public portfolio showcasing GitHub projects, Spotify now-playing widget, Discord avatar integration, and a protected admin panel for database/calendar management.
+AdepT's personal portfolio ("Mark 2") — a single-page dossier-themed site for
+**me.adeptproductions.dev** (not yet live; dev deploy at http://10.0.2.26/, LXC 226).
+Astro 7 + Node adapter, React islands, Tailwind 4, AdepT design system (shared with
+`../studio`). Branch `astro-rebuild`; GitHub repo is still named `adept.dev` and `main`
+still feeds the old Next.js site on Vercel until DNS cutover — don't merge to main.
+
+## Non-negotiables
+
+- **Identity redaction:** the user's real name, employer, universities, phone, personal
+  email, and venture names must NEVER appear in site source or built output. Redactions
+  render via `.redact` bars as a style feature. After content changes, grep `dist/` for
+  leaks before deploying.
+- **Projects are a hand-picked list** (`PROJECTS` in `src/pages/index.astro`). Never
+  reinstate auto-listing from the GitHub API (it leaked private repo names). Private
+  projects get `href: null` → "Private", no link.
+- The old Next.js app (`app/`, `components/`, `lib/`, `middleware.ts`) is frozen reference
+  for the future internal-only admin port — don't build on it, don't delete it yet.
 
 ## Commands
 
 ```bash
-npm run dev      # Start development server (http://localhost:3000)
-npm run build    # Production build
-npm run start    # Start production server (requires build first)
-npm run lint     # Run ESLint
+npm run dev        # http://localhost:4321
+npm run build      # SSR build → dist/ (server + prerendered pages)
+npm run preview    # node ./dist/server/entry.mjs
 ```
 
 ## Architecture
 
-### Tech Stack
-- **Framework**: Next.js 14 with React 18, TypeScript
-- **Auth**: NextAuth.js v4 with GitHub OAuth
-- **Database**: Supabase (PostgreSQL)
-- **Caching**: Upstash Redis (distributed) + NodeCache (in-memory)
-- **Styling**: Tailwind CSS with Framer Motion animations
+- `src/pages/index.astro` — the whole site: hero + sections (1.0 About, 2.0 Experience,
+  3.0 System, 4.0 Projects as a card deck where suits = lifecycle stages, 5.0 Contact).
+  Data consts live at the top (`PROJECTS`, `STAGES`, `EXPERIENCE`, `RIGS`, `CAPABILITIES`).
+- `src/layouts/Base.astro` — nav/footer (commit hash via `__COMMIT__` define) + the FX
+  engine: per-element IntersectionObserver reveals, text decode, typewriter prompts.
+- `src/styles/global.css` — design tokens, rv-* reveal variants, card chrome, decrypt
+  expander. Reduced-motion must always degrade to a static page.
+- API routes (`src/pages/api/`): `spotify/now-playing`, `discord` — secrets via env;
+  in-process TTL cache in `src/lib/cache.ts`. Secrets live in `.env.local` (master, never
+  committed/printed) and `/opt/stacks/adept-dev/.env` on LXC 226.
 
-### Route Structure
-- `/` - Public hero page with portfolio, Spotify widget, Discord profile
-- `/admin/*` - Protected routes (middleware-guarded via JWT + Supabase admin check)
-- `/api/*` - API routes for auth, GitHub, Spotify, Discord, and admin operations
+## Deploy (DEV)
 
-### Key Integrations
-- **Spotify** (`lib/spotify.ts`, `app/api/spotify/`) - OAuth flow with token refresh, 7s polling with visibility optimization
-- **GitHub** (`app/api/github/`) - GraphQL API for repos with Redis caching and rate limiting
-- **Discord** (`app/api/discord/`) - Bot token for avatar fetching with multi-layer caching
-- **Supabase** (`lib/supabase/`, `lib/auth.ts`) - Database client and admin role verification
-
-### Authentication Flow
-1. GitHub OAuth via NextAuth (`lib/auth.ts`)
-2. Middleware (`middleware.ts`) protects `/admin/*` routes
-3. Admin verification checks Supabase `admins` table by email
-
-### Caching Strategy
-- **Redis**: Distributed cache for GitHub repos (1h), Discord avatar, rate limiting
-- **NodeCache**: In-memory for Spotify tokens (1h) and now-playing (5s)
-- **Client-side**: Local maps for profile pictures and GitHub data
-
-## Environment Variables
-
-Required in `.env.local`:
-- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-- `UPSTASH_REDIS_REST_KV_REST_API_URL`, `UPSTASH_REDIS_REST_KV_REST_API_TOKEN`
-- `NEXTAUTH_URL`, `NEXTAUTH_SECRET`
-- `GITHUB_ID`, `GITHUB_SECRET`, `GITHUB_AUTH_TOKEN`
-- `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `NEXT_PUBLIC_BASE_URL`
-- `DISCORD_USER_ID`, `DISCORD_BOT_TOKEN`
+Procedure in `~/git/homeserver/configs/dev/services/adept.dev/README.md` — rsync to the
+Proxmox host, wipe-except-`.env`, tar into LXC 226, `docker compose up -d --build`.
+Prod (LXC 126 + tunnel route) is a planned, user-authorized-only step.
