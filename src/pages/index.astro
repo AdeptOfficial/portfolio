@@ -14,8 +14,7 @@ const FEATURED = [
   {
     serial: '001',
     name: 'dayplan',
-    badge: 'WIP',
-    badgeColor: 'var(--color-muted)',
+    badge: 'IN DEVELOPMENT',
     blurb:
       'AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks — review, apply atomically, undo as a group.',
     tags: ['react', 'sqlite', 'ai-assistant', 'self-hosted'],
@@ -25,8 +24,7 @@ const FEATURED = [
   {
     serial: '002',
     name: 'ConnectHub',
-    badge: 'WIP',
-    badgeColor: 'var(--color-muted)',
+    badge: 'IN DEVELOPMENT',
     blurb:
       'Real-time chat platform on Bun — Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.',
     tags: ['bun', 'websockets', 'e2ee'],
@@ -36,8 +34,7 @@ const FEATURED = [
   {
     serial: '003',
     name: 'AdepTLab',
-    badge: 'LIVE',
-    badgeColor: 'var(--color-signal)',
+    badge: 'OPERATIONAL',
     blurb:
       'My homelab: two Proxmox servers running 20+ services — media, photos, AI inference, automation — with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
     tags: ['proxmox', 'docker', 'zfs', 'tailscale', 'cloudflare'],
@@ -47,8 +44,7 @@ const FEATURED = [
   {
     serial: '004',
     name: 'adeptproductions.dev',
-    badge: 'LIVE',
-    badgeColor: 'var(--color-signal)',
+    badge: 'OPERATIONAL',
     blurb:
       'The studio itself — app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions.',
     tags: ['astro', 'tailwind', 'docker', 'self-hosted'],
@@ -64,42 +60,42 @@ const ARCHIVE = [
     name: 'Ditto Looper',
     blurb: 'Real-time Android audio looper modeled on a guitar pedal — layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
     tags: ['kotlin', 'android', 'oboe'],
-    status: 'ACTIVE',
+    status: 'IN DEVELOPMENT',
     href: 'https://github.com/AdeptOfficial/record',
   },
   {
     name: 'Syna',
     blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
     tags: ['python', 'llm'],
-    status: 'PAUSED',
+    status: 'DORMANT',
     href: 'https://github.com/AdeptOfficial/Syna',
   },
   {
     name: 'vLLM on an RTX 5090',
     blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine — without breaking system Python, CUDA, or drivers.',
     tags: ['vllm', 'cuda', 'benchmarks'],
-    status: 'ACTIVE',
+    status: 'IN DEVELOPMENT',
     href: 'https://github.com/AdeptOfficial/vLLM-test',
   },
   {
     name: 'Status Tracker',
     blurb: 'Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.',
     tags: ['python', 'webhooks', 'self-hosted'],
-    status: 'ACTIVE',
+    status: 'OPERATIONAL',
     href: 'https://github.com/AdeptOfficial/status-tracker',
   },
   {
     name: 'Domain Watcher',
     blurb: 'Daily RDAP checks on domains I want or own — alerts the day a drop is coming, so I never lose another one by six days.',
     tags: ['rdap', 'n8n', 'self-hosted'],
-    status: 'WIP',
+    status: 'IN DEVELOPMENT',
     href: null,
   },
   {
     name: '[REDACTED] Tracker Bot',
     blurb: 'Discord bot built from scratch for a [REDACTED] community server — member verification, a recruiter queue, and course records.',
     tags: ['discord.js', 'mongodb'],
-    status: 'ACTIVE',
+    status: 'OPERATIONAL',
     href: null,
   },
   {
@@ -107,24 +103,26 @@ const ARCHIVE = [
     blurb:
       'Collab project with a friend: a hub for finding projects to contribute to and people to build with — video calling, real-time chat, and a meetup location finder.',
     tags: ['django', 'channels', 'celery', 'redis', 'docker'],
-    status: 'ARCHIVED',
+    status: 'DECOMMISSIONED',
     href: null,
   },
   {
     name: 'adept.dev — Mark 1',
     blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2 — the one you're reading.",
     tags: ['nextjs', 'vercel'],
-    status: 'ARCHIVED',
+    status: 'DECOMMISSIONED',
     href: null,
   },
 ];
 
-const STATUS_COLOR: Record<string, string> = {
-  ACTIVE: 'var(--color-signal)',
-  WIP: 'var(--color-muted)',
-  PAUSED: 'var(--color-faint)',
-  ARCHIVED: 'var(--color-faint)',
-};
+// Project lifecycle — one vocabulary for badges and grouping.
+const STAGES = [
+  { key: 'OPERATIONAL', color: 'var(--color-signal)', note: 'shipped & running' },
+  { key: 'IN DEVELOPMENT', color: 'var(--color-ink)', note: 'actively being built' },
+  { key: 'DORMANT', color: 'var(--color-muted)', note: 'on the shelf, may return' },
+  { key: 'DECOMMISSIONED', color: 'var(--color-faint)', note: 'retired, kept for the record' },
+];
+const STATUS_COLOR: Record<string, string> = Object.fromEntries(STAGES.map((st) => [st.key, st.color]));
 
 // Render [REDACTED] tokens inside text as styled redaction bars.
 const redactParts = (text: string) => text.split(/(\[REDACTED\])/);
@@ -383,7 +381,7 @@ const CAPABILITIES = [
                 <h3 class="font-display text-lg font-bold">{p.name}</h3>
                 <span
                   class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em]"
-                  style={`color: ${p.badgeColor};`}
+                  style={`color: ${STATUS_COLOR[p.badge]};`}
                 >
                   {p.badge}
                 </span>
@@ -401,11 +399,23 @@ const CAPABILITIES = [
       }
     </div>
 
-    <!-- Archive tier — hand-picked (ARCHIVE above); private projects have no link -->
-    <h3 class="rv mt-10 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">The archive</h3>
-    <div class="mt-3 grid gap-px">
+    <!-- Other operations — hand-picked (ARCHIVE above), grouped by lifecycle stage;
+         private projects have no link -->
+    <h3 class="rv mt-12 font-display text-xl font-bold uppercase tracking-wide">Other operations</h3>
+    {
+      STAGES.map((stage) => {
+        const items = ARCHIVE.filter((p) => p.status === stage.key);
+        if (items.length === 0) return null;
+        return (
+          <div class="mt-6">
+            <h4 class="rv flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
+              <span class="size-1.5" style={`background: ${stage.color};`} aria-hidden="true" />
+              <span style={`color: ${stage.color};`}>{stage.key}</span>
+              <span class="text-faint">[{items.length}] // {stage.note}</span>
+            </h4>
+            <div class="mt-3 grid gap-px">
       {
-        ARCHIVE.map((p) => (
+        items.map((p) => (
           <div class="rv flex flex-wrap items-center justify-between gap-3 border border-line bg-card px-5 py-4 transition-colors hover:border-muted">
             <div class="min-w-0">
               <h4 class="font-display font-bold">
@@ -425,12 +435,6 @@ const CAPABILITIES = [
               </div>
             </div>
             <div class="flex shrink-0 items-center gap-3">
-              <span
-                class="border border-line px-2 py-1 font-mono text-[10px] font-bold tracking-[0.2em]"
-                style={`color: ${STATUS_COLOR[p.status]};`}
-              >
-                {p.status}
-              </span>
               {p.href ? (
                 <a
                   href={p.href}
@@ -449,7 +453,11 @@ const CAPABILITIES = [
           </div>
         ))
       }
-    </div>
+            </div>
+          </div>
+        );
+      })
+    }
   </section>
 
   <!-- 4.0 CONTACT — signal locking on: blur to sharp -->
