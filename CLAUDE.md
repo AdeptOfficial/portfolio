@@ -46,6 +46,6 @@ npm run preview    # node ./dist/server/entry.mjs
 
 ## Deploy (DEV)
 
-Procedure in `~/git/homeserver/configs/dev/services/adept.dev/README.md` — rsync to the
+Procedure in `~/git/homeserver/configs/dev/services/portfolio/README.md` — rsync to the
 Proxmox host, wipe-except-`.env`, tar into LXC 226, `docker compose up -d --build`.
 Prod (LXC 126 + tunnel route) is a planned, user-authorized-only step.
