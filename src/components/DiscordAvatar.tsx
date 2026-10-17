@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 
-/** Fetches the live Discord avatar and renders it with a signal ring. */
+/** Fetches the live Discord avatar; falls back to a monogram when unavailable. */
 export default function DiscordAvatar() {
   const [url, setUrl] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     fetch('/api/discord')
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => setUrl(d.profilePicUrl))
-      .catch(() => setUrl(null));
+      .then((d) => (d.profilePicUrl ? setUrl(d.profilePicUrl) : setFailed(true)))
+      .catch(() => setFailed(true));
   }, []);
 
   return (
@@ -17,7 +18,11 @@ export default function DiscordAvatar() {
       style={{ borderColor: 'var(--color-signal)', boxShadow: '0 0 60px rgba(63, 212, 230, 0.25)' }}
     >
       {url ? (
-        <img src={url} alt="AdepT's avatar" className="size-full object-cover" />
+        <img src={url} alt="AdepT's avatar" className="size-full object-cover" onError={() => setFailed(true)} />
+      ) : failed ? (
+        <span className="select-none font-display text-6xl font-bold sm:text-8xl" style={{ color: 'var(--color-signal)' }}>
+          A
+        </span>
       ) : (
         <span className="font-mono text-[10px] uppercase tracking-widest text-faint">loading</span>
       )}
