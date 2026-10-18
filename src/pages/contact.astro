@@ -1,15 +1,8 @@
 ---
-// Contact lives on the home page now (Section 4.0); keep the old URL working.
+import { i18n } from '../lib/i18n';
+const {t, locale, localize} = i18n(Astro.url);
+const destination = localize('/#contact');
 ---
-
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0;url=/#contact" />
-    <title>Contact — AdepT</title>
-  </head>
-  <body>
-    <a href="/#contact">Contact moved — tap here if you aren't redirected.</a>
-  </body>
-</html>
+<html lang={locale}><head><meta charset="utf-8" /><meta http-equiv="refresh" content={`0;url=${destination}`} /><title>{t('Contact — AdepT')}</title><link rel="canonical" href={new URL(destination!, Astro.site)} /></head>
+<body><a href={destination}>{t("Contact moved — tap here if you aren't redirected.")}</a></body></html>

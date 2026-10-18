@@ -4,6 +4,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+ARG PUBLIC_DEPLOY_ENV=production
+ENV PUBLIC_DEPLOY_ENV=${PUBLIC_DEPLOY_ENV}
 RUN npm run build
 
 # Runtime stage — Node server (Astro standalone adapter)

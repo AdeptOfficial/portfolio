@@ -48,7 +48,7 @@ npm run preview    # node ./dist/server/entry.mjs
 
 Procedure in `~/git/homeserver/configs/dev/services/portfolio/README.md` — rsync to the
 Proxmox host, wipe-except-`.env`, tar into LXC 226, `docker compose up -d --build`.
-Prod (LXC 126 + tunnel route) is a planned, user-authorized-only step.
+Prod (LXC 126 + tunnel route) is live; updates require explicit user authorization.
 
 ## Project-card lifecycle — status promotion is USER-GATED (2026-10-17 rule)
 
@@ -66,3 +66,25 @@ Never on your own initiative: flip a card's suit/status forward, add an `href` t
 repo, or write "now open source / operational" blurb text. (An agent once dealt Domain
 Watcher into spades with a repo link while it was still in dev testing — rolled back
 across prod. Don't be that agent.)
+
+## Localization
+
+English remains at existing URLs; Simplified Chinese is under `/zh-hans/`.
+Chinese routes reuse the original pages; `src/lib/i18n.ts` derives the locale from
+Astro.url. Text translations live in `src/i18n/zh-Hans.json`; technical identifiers,
+redactions and project facts remain shared. Update both languages together.
+
+Run `npm run check:i18n` after copy changes (also runs during `npm run build`).
+A new English source string needs a Chinese entry and a reviewed-source hash:
+`node scripts/review-i18n.mjs string "English source"` after reviewing the wording.
+Full maintenance and browser tests:
+[localization feature](../studio/docs/features/website-localization.md).
+
+Dev Docker builds require `--build-arg PUBLIC_DEPLOY_ENV=dev` to keep links between
+sites on dev; then use `docker compose up -d --no-build`. Default builds use public
+origins. Production still requires separate explicit authorization.
+
+Language choices are available from matching globe menus in the header and footer.
+Header controls stay grouped on the right. The footer Mark 2 build label is plain
+text, and the homepage contact section does not link the GitHub profile. Project
+repository links remain intentional. Production build flag: PUBLIC_DEPLOY_ENV=production.

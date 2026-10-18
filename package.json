@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run check:i18n && astro build",
     "preview": "node ./dist/server/entry.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "check:i18n": "node scripts/check-i18n.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.8",

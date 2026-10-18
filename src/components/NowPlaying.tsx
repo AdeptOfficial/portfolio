@@ -1,3 +1,4 @@
+import { translate, type Locale } from '../lib/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 type TrackData = {
@@ -19,7 +20,8 @@ function fmt(ms: number): string {
 }
 
 /** Polls /api/spotify/now-playing every 7s (paused while the tab is hidden). */
-export default function NowPlaying() {
+export default function NowPlaying({locale = 'en'}: {locale?: Locale}) {
+  const t = (text: string) => translate(locale, text);
   const [track, setTrack] = useState<TrackData | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
@@ -73,7 +75,7 @@ export default function NowPlaying() {
   return (
     <div className="border border-line bg-card p-4">
       <p className="overline" style={{ color: track?.is_playing ? 'var(--color-signal)' : undefined }}>
-        {track?.is_playing ? '// Now playing' : '// Spotify — idle'}
+        {track?.is_playing ? t('// Now playing') : t('// Spotify — idle')}
       </p>
       {item ? (
         <a
@@ -94,7 +96,7 @@ export default function NowPlaying() {
           </div>
         </a>
       ) : (
-        <p className="mt-3 text-sm text-faint">Nothing on right now.</p>
+        <p className="mt-3 text-sm text-faint">{t('Nothing on right now.')}</p>
       )}
       {track?.is_playing && item && (
         <div className="mt-3 h-0.5 w-full bg-line">

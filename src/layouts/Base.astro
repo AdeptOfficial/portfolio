@@ -1,12 +1,16 @@
 ---
+import { i18n } from '../lib/i18n';
+const { t, localize, locale } = i18n(Astro.url);
 import '../styles/global.css';
+import LanguageSwitch from '../components/LanguageSwitch.astro';
+import { englishPath, hasTranslation, prefix } from '../lib/i18n';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'AdepT — software developer, founder of Adept Productions.' } = Astro.props;
+const { title, description = t('AdepT — software developer, founder of Adept Productions.') } = Astro.props;
 
 const NAV = [
   { label: 'About', href: '/#about' },
@@ -22,15 +26,21 @@ const commit: string = __COMMIT__;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add("fx");</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0a1014" />
     <meta name="description" content={description} />
+    {hasTranslation(Astro.url.pathname) && <>
+      <link rel="alternate" hreflang="en" href={new URL(englishPath(Astro.url.pathname), Astro.site)} />
+      <link rel="alternate" hreflang="zh-Hans" href={new URL(prefix + englishPath(Astro.url.pathname), Astro.site)} />
+      <link rel="alternate" hreflang="x-default" href={new URL(englishPath(Astro.url.pathname), Astro.site)} />
+    </>}
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href={localize("/favicon.png")} />
+    <link rel="apple-touch-icon" href={localize("/apple-touch-icon.png")} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <title>{title}</title>
 
@@ -51,28 +61,29 @@ const commit: string = __COMMIT__;
   <body class="flex min-h-screen flex-col">
     <header class="sticky top-0 z-50 border-b border-line bg-base/90 backdrop-blur">
       <div class="flex h-16 w-full items-center justify-between gap-3 px-4 sm:px-8 lg:px-14">
-        <a href="/" class="flex shrink-0 items-center gap-3">
+        <a href={localize("/")} class="flex shrink-0 items-center gap-3">
           <img src="/logo.png" alt="" class="size-7" aria-hidden="true" />
           <span class="font-display text-sm font-bold uppercase tracking-[0.3em]">AdepT</span>
         </a>
-        <nav class="flex items-center gap-4 sm:gap-6" aria-label="Main">
+        <div class="ml-auto flex items-center gap-3 lg:gap-6">
+        <nav class="flex items-center gap-4 lg:gap-6" aria-label={t("Main")}>
           {
             NAV.map((item) => (
               <a
-                href={item.href}
-                class="hidden font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-ink sm:inline"
+                href={localize(item.href)}
+                class="hidden font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-ink lg:inline"
               >
-                {item.label}
+                {t(item.label)}
               </a>
             ))
           }
           <a
             href="mailto:hello@adeptproductions.dev?subject=Resume%20request"
             class="border border-line px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-signal hover:text-ink"
-          >
-            Request dossier
-          </a>
+          > {t("Request dossier")} </a>
         </nav>
+        <LanguageSwitch />
+        </div>
       </div>
     </header>
 
@@ -81,20 +92,14 @@ const commit: string = __COMMIT__;
     </main>
 
     <footer class="mt-24 border-t border-line">
-      <div class="flex w-full flex-col gap-3 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14">
+      <div class="flex w-full flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14 xl:px-20">
         <p class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint">
-          © {new Date().getFullYear()} AdepT // Designed &amp; built from scratch, self-hosted on my own hardware
+          © {new Date().getFullYear()} AdepT // {t("Designed & built from scratch, self-hosted on my own hardware")}
         </p>
-        <p class="flex gap-5 font-mono text-[11px] uppercase tracking-[0.15em]">
-          <a href="https://adeptproductions.dev" class="text-faint hover:text-ink">Studio</a>
-          <a
-            href={`https://github.com/AdeptOfficial/portfolio/commit/${commit}`}
-            class="text-faint hover:text-ink"
-            title="This exact build's commit"
-          >
-            Mark 2 #{commit}
-          </a>
-        </p>
+        <div class="flex items-center justify-between gap-5"><p class="flex gap-5 font-mono text-[11px] uppercase tracking-[0.15em]">
+          <a href={localize("https://adeptproductions.dev")} class="text-faint hover:text-ink">{t("Studio")}</a>
+          <span class="text-faint">Mark 2 #{commit}</span>
+        </p><LanguageSwitch /></div>
       </div>
     </footer>
 

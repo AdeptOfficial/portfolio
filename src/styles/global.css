@@ -73,10 +73,10 @@ header nav a {
    the IntersectionObserver in Base.astro; descendants animate from their
    rv-* initial states. --d = per-element delay. Reduced-motion: static. */
 @media (prefers-reduced-motion: no-preference) {
-  .rv,
-  .rv-left,
-  .rv-scale,
-  .rv-blur {
+  html.fx .rv,
+  html.fx .rv-left,
+  html.fx .rv-scale,
+  html.fx .rv-blur {
     opacity: 0;
     transition:
       opacity 1.8s cubic-bezier(0.22, 0.9, 0.3, 1),
@@ -84,19 +84,19 @@ header nav a {
       filter 1.8s cubic-bezier(0.22, 0.9, 0.3, 1);
     transition-delay: var(--d, 0s);
   }
-  .rv {
+  html.fx .rv {
     transform: translateY(32px);
   }
-  .rv-left {
+  html.fx .rv-left {
     transform: translateX(-48px);
   }
-  .rv-scale {
+  html.fx .rv-scale {
     transform: translateY(24px) scale(0.95);
   }
-  .rv-blur {
+  html.fx .rv-blur {
     filter: blur(10px);
   }
-  :is(.rv, .rv-left, .rv-scale, .rv-blur).in-view {
+  html.fx :is(.rv, .rv-left, .rv-scale, .rv-blur).in-view {
     opacity: 1;
     transform: none;
     filter: none;
@@ -265,3 +265,21 @@ details.decrypt[open] .when-open {
   width: 1.15em;
   text-align: center;
 }
+
+/* Native details keeps the footer language menu usable without JavaScript. */
+.language-switch { position: relative; flex: none; font-size: 12px; letter-spacing: normal; }
+.language-switch summary { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--color-line); color: var(--color-muted); cursor: pointer; list-style: none; }
+.language-switch summary::-webkit-details-marker { display: none; }
+.language-switch summary:hover, .language-switch[open] summary { color: var(--color-signal); border-color: var(--color-signal); }
+.language-options { position: absolute; z-index: 60; bottom: calc(100% + 8px); right: 0; min-width: 160px; padding: 6px; background: var(--color-card); border: 1px solid var(--color-line); box-shadow: 0 8px 24px #0008; }
+.language-options a { display: block; padding: 10px 12px; white-space: nowrap; color: var(--color-muted); }
+.language-options a:hover { background: var(--color-surface); color: var(--color-ink); }
+.language-options a[aria-current] { color: var(--color-signal); text-decoration: underline; text-underline-offset: 4px; }
+.language-switch :is(summary,a):focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; }
+html:lang(zh-Hans) { font-family: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif; }
+html:lang(zh-Hans) body { line-height: 1.8; }
+html:lang(zh-Hans) :is(h1,h2,h3,h4,p,a,span,dt,input,button) { letter-spacing: normal; }
+html:lang(zh-Hans) :is(h1,h2,h3,h4) { line-height: 1.25; }
+html:lang(zh-Hans) main { overflow-wrap: anywhere; }
+
+header .language-options { top: calc(100% + 8px); bottom: auto; }
