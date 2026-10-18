@@ -1,4 +1,6 @@
 ---
+import { i18n } from '../lib/i18n';
+const { t, localize, locale } = i18n(Astro.url);
 import fs from 'node:fs';
 import Base from '../layouts/Base.astro';
 import SectionHead from '../components/SectionHead.astro';
@@ -32,7 +34,7 @@ const PROJECTS: Project[] = [
     rank: 'A',
     status: 'OPERATIONAL',
     blurb:
-      'My homelab: two Proxmox servers running 20+ services (media, photos, AI inference, automation) with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels.',
+      t("My homelab: two Proxmox servers running 20+ services (media, photos, AI inference, automation) with GPU passthrough, a three-layer no-cloud backup strategy, and firewalled public services behind Cloudflare Tunnels."),
     tags: ['proxmox', 'docker', 'zfs', 'tailscale', 'cloudflare'],
     href: null,
   },
@@ -42,7 +44,7 @@ const PROJECTS: Project[] = [
     rank: 'K',
     status: 'OPERATIONAL',
     blurb:
-      'The studio itself: app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions.',
+      t("The studio itself: app catalogue, dev notes, and blog. Astro static build served from my own hardware behind a Cloudflare Tunnel, firewalled both directions."),
     tags: ['astro', 'tailwind', 'docker', 'self-hosted'],
     href: 'https://adeptproductions.dev',
     linkLabel: 'Visit',
@@ -52,7 +54,7 @@ const PROJECTS: Project[] = [
     name: 'Status Tracker',
     rank: 'Q',
     status: 'OPERATIONAL',
-    blurb: 'Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.',
+    blurb: t("Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck."),
     tags: ['python', 'webhooks', 'self-hosted'],
     href: 'https://github.com/AdeptOfficial/status-tracker',
   },
@@ -61,7 +63,7 @@ const PROJECTS: Project[] = [
     name: '[REDACTED] Tracker Bot',
     rank: 'J',
     status: 'OPERATIONAL',
-    blurb: 'Discord bot built from scratch for a [REDACTED] community server: member verification, a recruiter queue, and course records.',
+    blurb: t("Discord bot built from scratch for a [REDACTED] community server: member verification, a recruiter queue, and course records."),
     tags: ['discord.js', 'mongodb'],
     href: null,
   },
@@ -72,7 +74,7 @@ const PROJECTS: Project[] = [
     rank: 'A',
     status: 'IN DEVELOPMENT',
     blurb:
-      'AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks. Review, apply atomically, undo as a group.',
+      t("AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks. Review, apply atomically, undo as a group."),
     tags: ['react', 'sqlite', 'ai-assistant', 'self-hosted'],
     href: 'https://adeptproductions.dev/apps/dayplan/',
     linkLabel: 'Studio',
@@ -83,9 +85,9 @@ const PROJECTS: Project[] = [
     rank: 'K',
     status: 'IN DEVELOPMENT',
     blurb:
-      'Real-time chat platform on Bun: Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.',
+      t("Real-time chat platform on Bun: Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging."),
     tags: ['bun', 'websockets', 'e2ee'],
-    href: 'https://adeptproductions.dev/apps/connecthub/',
+    href: 'https://adeptproductions.dev/#software',
     linkLabel: 'Studio',
   },
   {
@@ -93,7 +95,7 @@ const PROJECTS: Project[] = [
     name: 'Ditto Looper',
     rank: 'Q',
     status: 'IN DEVELOPMENT',
-    blurb: 'Real-time Android audio looper modeled on a guitar pedal: layer stacking, overdubs, hold-to-undo, built on low-latency native audio.',
+    blurb: t("Real-time Android audio looper modeled on a guitar pedal: layer stacking, overdubs, hold-to-undo, built on low-latency native audio."),
     tags: ['kotlin', 'android', 'oboe'],
     href: 'https://github.com/AdeptOfficial/record',
   },
@@ -102,7 +104,7 @@ const PROJECTS: Project[] = [
     name: 'Domain Watcher',
     rank: 'J',
     status: 'IN DEVELOPMENT',
-    blurb: 'Daily RDAP checks on domains I want or own. Alerts the day a drop is coming, so I never lose another one by six days.',
+    blurb: t("Daily RDAP checks on domains I want or own. Alerts the day a drop is coming, so I never lose another one by six days."),
     tags: ['rdap', 'n8n', 'self-hosted'],
     href: null,
   },
@@ -111,7 +113,7 @@ const PROJECTS: Project[] = [
     name: 'vLLM on an RTX 5090',
     rank: '10',
     status: 'IN DEVELOPMENT',
-    blurb: 'Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine without breaking system Python, CUDA, or drivers.',
+    blurb: t("Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine without breaking system Python, CUDA, or drivers."),
     tags: ['vllm', 'cuda', 'benchmarks'],
     href: 'https://github.com/AdeptOfficial/vLLM-test',
   },
@@ -121,7 +123,7 @@ const PROJECTS: Project[] = [
     rank: '9',
     status: 'IN DEVELOPMENT',
     blurb:
-      'Self-hosted watch-together for my Jellyfin: synced playback so friends can watch the same thing from anywhere in the world — including behind the Great Firewall.',
+      t("Self-hosted watch-together for my Jellyfin: synced playback so friends can watch the same thing from anywhere in the world — including behind the Great Firewall."),
     tags: ['jellyfin', 'sync', 'self-hosted'],
     href: null,
   },
@@ -131,7 +133,7 @@ const PROJECTS: Project[] = [
     name: 'Syna',
     rank: '★',
     status: 'DORMANT',
-    blurb: 'Training an AI model into an entertainment-focused persona built to engage and interact with audiences.',
+    blurb: t("Training an AI model into an entertainment-focused persona built to engage and interact with audiences."),
     tags: ['python', 'llm'],
     href: 'https://github.com/AdeptOfficial/Syna',
   },
@@ -142,7 +144,7 @@ const PROJECTS: Project[] = [
     rank: 'A',
     status: 'DECOMMISSIONED',
     blurb:
-      'Collab project with a friend: a hub for finding projects to contribute to and people to build with, with video calling, real-time chat, and a meetup location finder.',
+      t("Collab project with a friend: a hub for finding projects to contribute to and people to build with, with video calling, real-time chat, and a meetup location finder."),
     tags: ['django', 'channels', 'celery', 'redis', 'docker'],
     href: null,
   },
@@ -151,7 +153,7 @@ const PROJECTS: Project[] = [
     name: 'adept.dev — Mark 1',
     rank: 'K',
     status: 'DECOMMISSIONED',
-    blurb: "The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2, the one you're reading.",
+    blurb: t("The previous incarnation of this site: Next.js 14, NextAuth, Vercel. Retired by Mark 2, the one you're reading."),
     tags: ['nextjs', 'vercel'],
     href: null,
   },
@@ -160,10 +162,10 @@ const PROJECTS: Project[] = [
 // Project lifecycle: one vocabulary, one color per stage (all sampled from the brand art).
 // Suits map to stages — four suits, four stages, colors from the brand art.
 const STAGES = [
-  { key: 'OPERATIONAL', suit: '♠', color: 'var(--color-signal)', note: 'shipped & running', layout: 'cards' },
-  { key: 'IN DEVELOPMENT', suit: '♥', color: 'var(--color-matrix)', note: 'actively being built', layout: 'cards' },
-  { key: 'DORMANT', suit: '♦', color: 'var(--color-scarf)', note: 'face-down, may re-enter the deck', layout: 'rows' },
-  { key: 'DECOMMISSIONED', suit: '♣', color: 'var(--color-crimson)', note: 'the discard pile', layout: 'rows' },
+  { key: 'OPERATIONAL', suit: '♠', color: 'var(--color-signal)', note: t("shipped & running"), layout: 'cards' },
+  { key: 'IN DEVELOPMENT', suit: '♥', color: 'var(--color-matrix)', note: t("actively being built"), layout: 'cards' },
+  { key: 'DORMANT', suit: '♦', color: 'var(--color-scarf)', note: t("face-down, may re-enter the deck"), layout: 'rows' },
+  { key: 'DECOMMISSIONED', suit: '♣', color: 'var(--color-crimson)', note: t("the discard pile"), layout: 'rows' },
 ] as const;
 
 // Render [REDACTED] tokens inside text as styled redaction bars.
@@ -173,7 +175,7 @@ const redactParts = (text: string) => text.split(/(\[REDACTED\])/);
 const RIGS = [
   {
     host: 'syna',
-    title: 'The battlestation',
+    title: t("The battlestation"),
     rows: [
       ['OS', 'SynaOS (CachyOS base) · Linux · Hyprland'],
       ['Board', 'X870E AORUS ELITE WIFI7 ICE'],
@@ -189,7 +191,7 @@ const RIGS = [
   },
   {
     host: 'adeptlab',
-    title: 'The server room',
+    title: t("The server room"),
     rows: [
       ['Hypervisor', 'Proxmox VE — 20+ LXCs & VMs'],
       ['Board', 'MSI MPG B850I EDGE TI WIFI'],
@@ -240,79 +242,79 @@ const NF: Record<string, string> = {
 
 const EXPERIENCE = [
   {
-    period: '2026 — PRESENT',
-    role: 'Software Developer · Enterprise API',
+    period: t("2026 — PRESENT"),
+    role: t("Software Developer · Enterprise API"),
     org: '[REDACTED]',
     points: [
-      'Build and maintain MuleSoft applications powering integrations for product teams across the enterprise',
-      "MuleSoft Community of Practice — the dev other devs ping when the integration layer fights back",
-      'Maintainer of Enterprise API Automation: PR-review automation, Jenkins + UrbanCode deploy rails, CLI tooling used daily by internal teams',
+      t("Build and maintain MuleSoft applications powering integrations for product teams across the enterprise"),
+      t("MuleSoft Community of Practice — the dev other devs ping when the integration layer fights back"),
+      t("Maintainer of Enterprise API Automation: PR-review automation, Jenkins + UrbanCode deploy rails, CLI tooling used daily by internal teams"),
     ],
   },
   {
-    period: 'SIDE QUESTS',
-    role: 'Intrapreneur · Internal Apps',
+    period: t("SIDE QUESTS"),
+    role: t("Intrapreneur · Internal Apps"),
     org: '[REDACTED]',
     points: [
-      'Check-In — in-person work tracker adopted by other departments (successfully automated myself out of the office)',
-      'Evidence Builder — AI captures your wins daily, so review season becomes copy-paste into Workday instead of archaeology',
+      t("Check-In — in-person work tracker adopted by other departments (successfully automated myself out of the office)"),
+      t("Evidence Builder — AI captures your wins daily, so review season becomes copy-paste into Workday instead of archaeology"),
     ],
   },
   {
     period: '2024 — 2026',
-    role: 'Software Developer',
+    role: t("Software Developer"),
     org: '[REDACTED]',
     points: [
-      'Enterprise integration flows moving data between internal systems and product teams — transformation, validation, 100% automated test coverage',
-      'Capacity dashboards for monitoring server usage and forecasting demand',
+      t("Enterprise integration flows moving data between internal systems and product teams — transformation, validation, 100% automated test coverage"),
+      t("Capacity dashboards for monitoring server usage and forecasting demand"),
     ],
   },
   {
     period: '2023',
-    role: 'Software Developer Intern',
+    role: t("Software Developer Intern"),
     org: '[REDACTED]',
-    points: ['RPA automation initiatives — internal storage and caching upkeep inside a virtual desktop environment'],
+    points: [t("RPA automation initiatives — internal storage and caching upkeep inside a virtual desktop environment")],
   },
   {
     period: '2022',
-    role: 'Software Developer Intern',
+    role: t("Software Developer Intern"),
     org: '[REDACTED]',
     points: [
-      'Legacy Java framework migration — eliminating technical debt',
-      'Devcontainer-based test development to cut onboarding time for future developers',
+      t("Legacy Java framework migration — eliminating technical debt"),
+      t("Devcontainer-based test development to cut onboarding time for future developers"),
     ],
   },
   {
     period: '2020 — 2023',
-    role: 'Founder & President',
+    role: t("Founder & President"),
     org: 'Trackers @ [REDACTED]',
     points: [
-      'Built a central hub for CS students — grown to 2,000+ members, with workshops and networking events through every academic year',
+      t("Built a central hub for CS students — grown to 2,000+ members, with workshops and networking events through every academic year"),
     ],
   },
 ];
 
 const CAPABILITIES = [
   {
-    title: 'Full-stack engineering',
-    body: 'TypeScript, React, Astro & Tailwind up front; Java, Python/Django & MuleSoft behind; Postgres, SQLite & Mongo underneath. Pipelines ship with tests.',
+    title: t("Full-stack engineering"),
+    body: t("TypeScript, React, Astro & Tailwind up front; Java, Python/Django & MuleSoft behind; Postgres, SQLite & Mongo underneath. Pipelines ship with tests."),
   },
   {
-    title: 'Self-hosted infrastructure',
-    body: "Proxmox, Docker, ZFS, Cloudflare Tunnels — everything you're reading is served from hardware I run.",
+    title: t("Self-hosted infrastructure"),
+    body: t("Proxmox, Docker, ZFS, Cloudflare Tunnels — everything you're reading is served from hardware I run."),
   },
   {
-    title: 'Automation & tooling',
-    body: 'n8n, RPA, Jenkins & UCD pipelines, internal CLI tools — if it happens twice, it gets automated.',
+    title: t("Automation & tooling"),
+    body: t("n8n, RPA, Jenkins & UCD pipelines, internal CLI tools — if it happens twice, it gets automated."),
   },
   {
-    title: 'Community & leadership',
-    body: 'Founded a 2,000-member CS community; the dev other devs ask first. Teaching is half the fun.',
+    title: t("Community & leadership"),
+    body: t("Founded a 2,000-member CS community; the dev other devs ask first. Teaching is half the fun."),
   },
 ];
 ---
 
-<Base title="AdepT — Design. Code. Ship. Repeat.">
+<Base title={t("AdepT — Design. Code. Ship. Repeat.")}>
   <!-- Hero — decode sequence -->
   <section
     class="mx-auto grid min-h-[calc(100svh-4rem)] max-w-5xl content-center items-center gap-10 py-12 lg:grid-cols-12"
@@ -323,21 +325,17 @@ const CAPABILITIES = [
         <span data-type="./init --dossier">./init --dossier</span><span class="cursor" aria-hidden="true">▋</span>
       </p>
       <h1 class="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight sm:text-7xl">
-        <span data-decode>Hi there,</span><br />
-        <span data-decode class="text-muted">I'm AdepT.</span>
+        <span data-decode>{t("Hi there,")}</span><br />
+        <span data-decode class="text-muted">{t("I'm AdepT.")}</span>
       </h1>
-      <p class="rv mt-6 max-w-md text-xl leading-relaxed text-ink/90" style="--d: 0.45s;">
-        Software developer at <span class="redact">[REDACTED]</span> &amp; founder of
-        <a href="https://adeptproductions.dev" class="underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a>.
+      <p class="rv mt-6 max-w-md text-xl leading-relaxed text-ink/90" style="--d: 0.45s;"> {t("Software developer at")} <span class="redact">[REDACTED]</span> {t("& founder of")} <a href={localize("https://adeptproductions.dev")} class="underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a>.
       </p>
-      <p class="rv mt-4 max-w-md leading-relaxed text-muted" style="--d: 0.6s;">
-        I build small, focused software — and self-host everything I can get away with.
-      </p>
+      <p class="rv mt-4 max-w-md leading-relaxed text-muted" style="--d: 0.6s;"> {t("I build small, focused software — and self-host everything I can get away with.")} </p>
     </div>
     <div class="rv flex flex-col items-center gap-6 lg:col-span-5" style="--d: 0.75s;">
-      <DiscordAvatar client:load />
+      <DiscordAvatar locale={locale} client:load />
       <div class="w-full max-w-xs">
-        <NowPlaying client:load />
+        <NowPlaying locale={locale} client:load />
       </div>
     </div>
   </section>
@@ -348,36 +346,21 @@ const CAPABILITIES = [
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
   >
     <div class="rv-left">
-      <SectionHead cmd="cat sections/1.0_about.md" headline="Why be afraid now?" />
+      <SectionHead cmd="cat sections/1.0_about.md" headline={t("Why be afraid now?")} />
     </div>
     <div class="rv-left mt-6 max-w-2xl space-y-4 leading-relaxed text-muted" style="--d: 0.2s;">
-      <p>
-        I'm driven by a simple belief: <strong class="text-ink">there's always a challenge greater than the one
-        you're currently facing — so why be afraid now?</strong> That's carried me from running a
-        2,000-member computer science community to shipping enterprise integrations by day and building an
-        independent software studio by night.
-      </p>
+      <p> {t("I'm driven by a simple belief:")} <strong class="text-ink">{t("there's always a challenge greater than the one you're currently facing — so why be afraid now?")}</strong> {t("That's carried me from running a 2,000-member computer science community to shipping enterprise integrations by day and building an independent software studio by night.")} </p>
       <details class="decrypt">
         <summary
           class="cursor-pointer font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-faint transition-colors hover:text-ink"
         >
-          <span class="when-closed">▸ sudo decrypt about.full.enc</span>
-          <span class="when-open">▾ // decrypted — clearance granted</span>
+          <span class="when-closed">▸ sudo decrypt about.full.enc {locale === "zh-Hans" && "（展开）"}</span>
+          <span class="when-open">{t("▾ // decrypted — clearance granted")}</span>
         </summary>
         <div class="expand mt-4 space-y-4 border-l border-line pl-5">
+          <p> {t("I'm an entrepreneur at heart. Every community I'm part of has pain points hiding in plain sight — and I can't")} <em>{t("not")}</em> {t("build the fix. That instinct became a 2,000-member hub for CS students who needed a place to land, co-founded ventures in consumer tech and campus food access (names")} <span class="redact">[REDACTED]</span>{t("), and internal tools my coworkers now use every day — including one that automated my own desk out of the office.")} </p>
           <p>
-            I'm an entrepreneur at heart. Every community I'm part of has pain points hiding in plain
-            sight — and I can't <em>not</em> build the fix. That instinct became a 2,000-member hub for
-            CS students who needed a place to land, co-founded ventures in consumer tech and campus food
-            access (names <span class="redact">[REDACTED]</span>), and internal tools my coworkers now
-            use every day — including one that automated my own desk out of the office.
-          </p>
-          <p>
-            <a href="https://adeptproductions.dev" class="text-ink underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a>
-            is that same instinct, aimed outward: focused tools for real problems, honest dev notes on
-            every app, and educational tech media. Everything runs on hardware I manage myself, from the
-            hypervisor up — because the homelab community has pain points too.
-          </p>
+            <a href={localize("https://adeptproductions.dev")} class="text-ink underline decoration-faint underline-offset-4 hover:decoration-ink">Adept Productions</a> {t("is that same instinct, aimed outward: focused tools for real problems, honest dev notes on every app, and educational tech media. Everything runs on hardware I manage myself, from the hypervisor up — because the homelab community has pain points too.")} </p>
         </div>
       </details>
     </div>
@@ -389,7 +372,7 @@ const CAPABILITIES = [
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
   >
     <div class="rv">
-      <SectionHead cmd="less sections/2.0_experience.log" headline="Trial by production" />
+      <SectionHead cmd="less sections/2.0_experience.log" headline={t("Trial by production")} />
     </div>
 
     <!-- No stagger here: each row triggers on its own scroll entry, so the
@@ -418,27 +401,21 @@ const CAPABILITIES = [
         ))
       }
       <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
-        <p class="font-mono text-[11px] font-bold tracking-[0.2em] sm:col-span-3" style="color: var(--color-signal);">
-          INCOMING 2027
-        </p>
+        <p class="font-mono text-[11px] font-bold tracking-[0.2em] sm:col-span-3" style="color: var(--color-signal);"> {t("INCOMING 2027")} </p>
         <div class="sm:col-span-9">
-          <h3 class="font-display text-lg font-bold">
-            M.S., Computer Science <span class="text-faint">//</span>
+          <h3 class="font-display text-lg font-bold"> {t("M.S., Computer Science")} <span class="text-faint">//</span>
             <span class="redact">[REDACTED] — ONLINE</span>
           </h3>
-          <p class="mt-2 text-sm leading-relaxed text-muted">Leveling up while shipping. Starts January 2027.</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">{t("Leveling up while shipping. Starts January 2027.")}</p>
         </div>
       </div>
       <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
-        <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">DEC 2023</p>
+        <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">{t("DEC 2023")}</p>
         <div class="sm:col-span-9">
-          <h3 class="font-display text-lg font-bold">
-            Honours B.S., Computer Science <span class="text-faint">//</span>
+          <h3 class="font-display text-lg font-bold"> {t("Honours B.S., Computer Science")} <span class="text-faint">//</span>
             <span class="redact">[REDACTED] UNIVERSITY</span>
           </h3>
-          <p class="mt-2 text-sm leading-relaxed text-muted">
-            Minor in entrepreneurship. Major GPA 3.7/4.0. The rest is classified.
-          </p>
+          <p class="mt-2 text-sm leading-relaxed text-muted"> {t("Minor in entrepreneurship. Major GPA 3.7/4.0. The rest is classified.")} </p>
         </div>
       </div>
     </div>
@@ -458,9 +435,7 @@ const CAPABILITIES = [
       href="mailto:hello@adeptproductions.dev?subject=Resume%20request"
       class="rv mt-8 inline-block self-start border border-line px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-signal hover:text-ink"
       style="--d: 0.7s;"
-    >
-      Request the full dossier →
-    </a>
+    > {t("Request the full dossier →")} </a>
   </section>
 
   <!-- 3.0 SYSTEM — fastfetch, as a webpage -->
@@ -469,7 +444,7 @@ const CAPABILITIES = [
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
   >
     <div class="rv">
-      <SectionHead cmd="fastfetch --all-rigs" headline="The machines behind it" />
+      <SectionHead cmd="fastfetch --all-rigs" headline={t("The machines behind it")} />
     </div>
     <div class="stagger mt-8 grid gap-4 md:grid-cols-2">
       {
@@ -482,8 +457,7 @@ const CAPABILITIES = [
                 <span class="size-2.5 rounded-full" style="background: var(--color-signal);" />
               </span>
               <span class="text-muted">
-                adept@<span style="color: var(--color-signal);">{rig.host}</span>:~$ fastfetch
-              </span>
+                adept@<span style="color: var(--color-signal);">{rig.host}</span>{t(":~$ fastfetch")} </span>
             </div>
             <div class="p-5">
               <div class="grid grid-cols-[1.4rem_1fr] text-sm leading-6">
@@ -495,13 +469,13 @@ const CAPABILITIES = [
                   <div class="grid grid-cols-[1.4rem_8.5rem_1fr] gap-x-1 text-sm leading-6">
                     <span class={`tree-tick${i === rig.rows.length - 1 ? ' last' : ''}`} aria-hidden="true" />
                     <dt class="whitespace-nowrap font-mono text-[11px] uppercase leading-6 tracking-[0.15em]" style="color: var(--color-signal);">
-                      <span class="nf mr-1.5 text-[13px] normal-case tracking-normal" aria-hidden="true">{NF[k] ?? ''}</span>{k}:
+                      <span class="nf mr-1.5 text-[13px] normal-case tracking-normal" aria-hidden="true">{NF[k] ?? ''}</span>{t(k)}:
                     </dt>
                     <dd class="leading-6 text-muted">
                       {kind === 'palette' ? (
                         <span class="inline-flex items-center gap-1.5">
                           {v}
-                          <span class="inline-flex gap-1" aria-label="color scheme">
+                          <span class="inline-flex gap-1" aria-label={t("color scheme")}>
                             {PALETTE.map((c) => (
                               <span class="size-2.5 rounded-full border border-line" style={`background: ${c};`} />
                             ))}
@@ -527,7 +501,7 @@ const CAPABILITIES = [
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
   >
     <div class="rv">
-      <SectionHead cmd="deal sections/4.0_projects.deck" headline="The hand I'm playing" />
+      <SectionHead cmd="deal sections/4.0_projects.deck" headline={t("The hand I'm playing")} />
     </div>
 
     {
@@ -538,7 +512,7 @@ const CAPABILITIES = [
           <div class="mt-10">
             <h3 class="rv flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.25em]">
               <span class="text-sm font-bold" style={`color: ${stage.color};`} aria-hidden="true">{stage.suit}</span>
-              <span class="font-bold" style={`color: ${stage.color};`}>{stage.key}</span>
+              <span class="font-bold" style={`color: ${stage.color};`}>{t(stage.key)}</span>
               <span class="text-faint">[{items.length}] // {stage.note}</span>
             </h3>
 
@@ -549,7 +523,7 @@ const CAPABILITIES = [
                   const image = shot(p.slug);
                   return (
                     <Card
-                      href={p.href ?? undefined}
+                      href={localize(p.href ?? undefined)}
                       target={p.href?.startsWith('http') && !p.href.includes('adeptproductions.dev') ? '_blank' : undefined}
                       rel={p.href ? 'noreferrer' : undefined}
                       class="rv-scale group block"
@@ -569,7 +543,7 @@ const CAPABILITIES = [
                         <br />
                         {p.rank === '★' ? '' : stage.suit}
                       </span>
-                      {image && <img src={image} alt={`${p.name} screenshot`} class="aspect-video w-full border-b border-line object-cover" />}
+                      {image && <img src={image} alt={`${p.name} ${t("screenshot")}`} class="aspect-video w-full border-b border-line object-cover" />}
                       <span
                         class="pointer-events-none absolute -right-1 -top-7 select-none font-display text-[7rem] font-bold leading-none opacity-[0.07]"
                         style={`color: ${stage.color};`}
@@ -588,7 +562,7 @@ const CAPABILITIES = [
                             class="shrink-0 font-mono text-[11px] uppercase tracking-[0.15em]"
                             style={`color: ${p.href ? stage.color : 'var(--color-faint)'};`}
                           >
-                            {p.href ? `${p.linkLabel ?? 'GitHub'} ↗` : 'Private'}
+                            {p.href ? `${t(p.linkLabel ?? 'GitHub')} ↗` : t('Private')}
                           </span>
                         </div>
                         <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">
@@ -630,15 +604,15 @@ const CAPABILITIES = [
                     </div>
                     {p.href ? (
                       <a
-                        href={p.href}
+                        href={localize(p.href)}
                         target="_blank"
                         rel="noreferrer"
                         class="font-mono text-[11px] uppercase tracking-[0.15em] text-muted hover:text-ink"
                       >
-                        {p.linkLabel ?? 'GitHub'} ↗
+                        {t(p.linkLabel ?? 'GitHub')} ↗
                       </a>
                     ) : (
-                      <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint">Private</span>
+                      <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-faint">{t("Private")}</span>
                     )}
                   </div>
                 ))}
@@ -656,11 +630,9 @@ const CAPABILITIES = [
     class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl scroll-mt-16 flex-col justify-center py-12"
   >
     <div class="rv-blur">
-      <SectionHead cmd="./open_channel.sh --secure" headline="Open a channel" />
+      <SectionHead cmd="./open_channel.sh --secure" headline={t("Open a channel")} />
     </div>
-    <p class="rv-blur mt-6 max-w-xl leading-relaxed text-muted" style="--d: 0.2s;">
-      Questions, collaborations, or just want to compare homelab notes — the inbox is open.
-    </p>
+    <p class="rv-blur mt-6 max-w-xl leading-relaxed text-muted" style="--d: 0.2s;"> {t("Questions, collaborations, or just want to compare homelab notes — the inbox is open.")} </p>
     <div class="rv-blur mt-8 flex flex-wrap gap-3" style="--d: 0.35s;">
       <a
         href="mailto:hello@adeptproductions.dev"
@@ -668,14 +640,6 @@ const CAPABILITIES = [
         style="color: var(--color-base);"
       >
         hello@adeptproductions.dev
-      </a>
-      <a
-        href="https://github.com/AdeptOfficial"
-        target="_blank"
-        rel="noreferrer"
-        class="border border-line px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-muted hover:text-ink"
-      >
-        GitHub // AdeptOfficial
       </a>
     </div>
   </section>
