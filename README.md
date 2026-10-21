@@ -34,6 +34,4 @@ publishing flow is user-gated, dev first, then production.
 
 ## // codesign
 
-<img src="https://raw.githubusercontent.com/AdeptOfficial/AdeptOfficial/main/assets/codesign.svg" alt="// code-signed by AdepT_X · stay sad and dead <3" width="440" height="36">
-
-<img src="https://raw.githubusercontent.com/AdeptOfficial/AdeptOfficial/main/assets/codesign-badge.svg" alt="code-signed by AdepT_X">
+<img src="https://raw.githubusercontent.com/AdeptOfficial/AdeptOfficial/main/assets/codesign.svg" alt="// code-signed by AdepT_X · stay sad and dead <3">
