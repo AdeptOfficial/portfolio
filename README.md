@@ -12,8 +12,8 @@ dossier-themed portfolio ("Mark 2") in English and Simplified Chinese.
 
 ## Branches
 
-- `astro-rebuild`: Mark 2, the version that is live. Work happens here.
-- `main`: the frozen Next.js Mark 1. Kept for history; do not merge into it.
+- `main`: Mark 2, the version that is live. Work happens here.
+- `mark-1-nextjs` (tag `mark-1`): the frozen Next.js Mark 1. Kept for history; do not merge it into `main`.
 
 ## Run locally
 

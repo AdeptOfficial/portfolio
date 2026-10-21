@@ -7,9 +7,10 @@ Guidance for Claude Code in this repository.
 AdepT's personal portfolio ("Mark 2") — a single-page dossier-themed site, LIVE at
 **https://me.adeptproductions.dev** (prod LXC 126; dev deploy at http://10.0.2.26/, LXC 226).
 Astro 7 + Node adapter, React islands, Tailwind 4, AdepT design system (shared with
-`../studio`). Branch `astro-rebuild`; GitHub repo `AdeptOfficial/portfolio` (renamed from
-adept.dev 2026-10-17). `main` is the frozen Next.js Mark 1 (Vercel project paused) —
-don't merge to main.
+`../studio`). Branch `main` (GitHub default since 2026-10-20; was `astro-rebuild`);
+GitHub repo `AdeptOfficial/portfolio` (renamed from adept.dev 2026-10-17). The frozen
+Next.js Mark 1 lives on branch `mark-1-nextjs` and tag `mark-1` (Vercel project
+paused); never merge it into `main`.
 
 ## Non-negotiables
 
