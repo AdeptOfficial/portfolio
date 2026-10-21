@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AdepT · portfolio
 
-## Getting Started
+The personal site at **https://me.adeptproductions.dev**: a single-page,
+dossier-themed portfolio ("Mark 2") in English and Simplified Chinese.
 
-First, run the development server:
+## Stack
+
+- Astro 7 with the Node adapter, React islands, Tailwind 4
+- The AdepT design system shared with the studio site (dark terminal-dossier look,
+  cyan signal accent, magenta signature)
+- Containerised with the `Dockerfile` and `compose.yaml` in this repo
+
+## Branches
+
+- `astro-rebuild`: Mark 2, the version that is live. Work happens here.
+- `main`: the frozen Next.js Mark 1. Kept for history; do not merge into it.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:4321
+npm run build        # runs the i18n check first, then astro build
+npm run preview      # serves the built site from dist/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`npm run check:i18n` verifies that every string exists in both languages.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Build the image from the `Dockerfile` and run it with `compose.yaml`. Where it runs,
+how it is fronted and how a release is approved are documented privately; the
+publishing flow is user-gated, dev first, then production.
 
-## Learn More
+## // codesign
 
-To learn more about Next.js, take a look at the following resources:
+<img src="https://raw.githubusercontent.com/AdeptOfficial/AdeptOfficial/main/assets/codesign.svg" alt="// code-signed by AdepT_X · stay sad and dead <3" width="440" height="36">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img src="https://raw.githubusercontent.com/AdeptOfficial/AdeptOfficial/main/assets/codesign-badge.svg" alt="code-signed by AdepT_X">
