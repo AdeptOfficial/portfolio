@@ -1,0 +1,12 @@
+# Keeps the Astro site's npm dependencies current and makes Dependabot re-evaluate
+# alerts against this branch. Pull requests are reviewed like any other change.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
