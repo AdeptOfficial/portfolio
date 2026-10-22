@@ -68,6 +68,11 @@ repo, or write "now open source / operational" blurb text. (An agent once dealt 
 Watcher into spades with a repo link while it was still in dev testing — rolled back
 across prod. Don't be that agent.)
 
+Card links: once the studio app is past `idea` (it then has a page), the card's `href` is
+`https://adeptproductions.dev/apps/<slug>/`; before that, `https://adeptproductions.dev/#software`.
+`i18n.ts` turns either into the zh page and, in dev builds, the dev origin. This is not a
+repo link; GitHub repo links stay user-gated as above.
+
 ## Localization
 
 English remains at existing URLs; Simplified Chinese is under `/zh-hans/`.

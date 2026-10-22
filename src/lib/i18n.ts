@@ -17,7 +17,8 @@ export function hasTranslation(path: string, portfolio = true): boolean {
   const plain = englishPath(path);
   if (portfolio) return ['/', '/contact/'].includes(plain);
   return ['/', '/about/', '/contact/', '/blog/', '/dev-notes/'].includes(plain)
-    || /^\/apps\/(amp-watchdog|dayplan|domain-watcher|status-tracker)\/$/.test(plain);
+    // Every studio app page has zh copy (the studio's i18n check enforces it), so match any slug.
+    || /^\/apps\/[a-z0-9-]+\/(dev-notes\/)?$/.test(plain);
 }
 export function i18n(url: URL) {
   const locale: Locale = /^\/zh-hans(?:\/|$)/.test(url.pathname) ? 'zh-Hans' : 'en';
