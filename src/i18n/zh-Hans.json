@@ -43,7 +43,6 @@
   "Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck.": "追踪自托管媒体服务中的请求，从提交到可以观看，显示流程卡在哪一步。",
   "Discord bot built from scratch for a [REDACTED] community server: member verification, a recruiter queue, and course records.": "为 [REDACTED] 社区从零开发的 Discord 机器人：成员验证、招聘队列和课程记录。",
   "AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks. Review, apply atomically, undo as a group.": "AI 辅助的日程规划工具：用自然语言描述一周安排，它会提出任务、事件和时间块。先审核，再一次性应用，也能整组撤销。",
-  "Real-time chat platform on Bun: Discord-style spaces and channels with an architecture built from day one for end-to-end encrypted group messaging.": "基于 Bun 的实时聊天平台：提供类似 Discord 的空间和频道，从架构设计之初就考虑了端到端加密的群组消息。",
   "Real-time Android audio looper modeled on a guitar pedal: layer stacking, overdubs, hold-to-undo, built on low-latency native audio.": "以吉他效果踏板为灵感的 Android 实时音频循环器：支持音轨叠加、叠录和长按撤销，基于低延迟原生音频构建。",
   "Daily RDAP checks on domains I want or own. Alerts the day a drop is coming, so I never lose another one by six days.": "每天通过 RDAP 检查我想要或已经拥有的域名。域名即将被删除时发出提醒，避免再因为晚了六天而错过。",
   "Running, serving, and benchmarking LLMs locally on a daily-driver Arch machine without breaking system Python, CUDA, or drivers.": "在日常使用的 Arch 电脑上运行、提供和测试本地大语言模型，同时不破坏系统 Python、CUDA 或驱动环境。",
@@ -118,5 +117,6 @@
   "// Spotify — idle": "// Spotify — 空闲",
   "Nothing on right now.": "当前没有播放音乐。",
   "Contact — AdepT": "联系 — AdepT",
-  "Contact moved — tap here if you aren't redirected.": "联系方式已移至首页；若未自动跳转，请点击这里。"
+  "Contact moved — tap here if you aren't redirected.": "联系方式已移至首页；若未自动跳转，请点击这里。",
+  "Chat that's dead to their systems. Coming soon.": "聊天，在他们的系统里查无此人。即将推出。"
 }
