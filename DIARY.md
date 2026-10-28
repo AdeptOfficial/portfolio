@@ -1,3 +1,9 @@
+## 2026-10-28: Keep WIP copy brief
+
+Owner requested shorter WIP descriptions; seven EN/zh product descriptions now state purpose and development status only.
+Removed PSIGHT's previous-name claim and detailed NULLIAS/Uplink readiness lists. Builds and translation checks pass.
+Next: verify the concise copy on DEV; production remains gated.
+
 ## 2026-10-28: Verify refreshed catalogue on DEV
 
 Deployed the committed catalogue candidate to DEV after owner authorization; bilingual browser, mobile and cross-site checks pass.
