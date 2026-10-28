@@ -1,3 +1,9 @@
+## 2026-10-28: Verify refreshed catalogue on DEV
+
+Deployed the committed catalogue candidate to DEV after owner authorization; bilingual browser, mobile and cross-site checks pass.
+Rollback and source verification: homeserver notes/studio/2026-10-28-catalogue-dev.md. Production unchanged.
+Next: owner reviews DEV and explicitly authorizes production publication.
+
 ## 2026-10-28: Refresh selected project cards
 
 Aligned selected cards with Studio's product evidence, private-use/pilot labels and staged Dayplan migration; removed the Status Tracker repository link.
