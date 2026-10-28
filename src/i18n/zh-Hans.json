@@ -118,7 +118,7 @@
   "Nothing on right now.": "当前没有播放音乐。",
   "Contact — AdepT": "联系 — AdepT",
   "Contact moved — tap here if you aren't redirected.": "联系方式已移至首页；若未自动跳转，请点击这里。",
-  "Chat that's dead to their systems. Coming soon.": "聊天，在他们的系统里查无此人。即将推出。",
+  "Chat that's dead to their systems. Coming soon.": "在他们的系统里，查无此人。敬请期待。",
   "Media request tracking in private production, from request to Jellyfin availability. Episode and recovery fixes remain in progress; no public download yet.": "在私人生产环境中跟踪媒体请求，直到内容可在 Jellyfin 中观看。分集与恢复问题仍在修复，目前没有公开下载。",
   "My planner is moving into Dossier as Exsya. Dayplan keeps food history and exports until the Fitness migration is accepted.": "我的规划工具正作为 Exsya 迁入 Dossier。饮食历史和导出会保留在 Dayplan，直到 Fitness 迁移通过验收。",
   "Alias-based encrypted chat in private development. Cross-device conversation and recovery acceptance are still underway; no Uplink account needed.": "使用别名身份的加密聊天应用，正在私人开发中。跨设备对话与恢复验收仍在进行，不需要 Uplink 账户。",
@@ -140,5 +140,11 @@
   "A private workspace for my day, my tools and Syna. In development.": "把日程、工具和 Syna 放在一起的私人工作空间。开发中。",
   "My music library, with a desktop and browser player that stays mine. In development.": "我的音乐库，以及由我掌控的桌面和浏览器播放器。开发中。",
   "My CachyOS-based desktop, growing into an installable operating system. In development.": "基于 CachyOS 的私人桌面，正逐步走向可安装的操作系统。开发中。",
-  "A watchlist for domains I want or own, with alerts when things change. In development.": "监控想要的域名和自己的域名，变化时发出提醒。开发中。"
+  "A watchlist for domains I want or own, with alerts when things change. In development.": "监控想要的域名和自己的域名，变化时发出提醒。开发中。",
+  "One doorway to the hosted apps.": "通往托管应用的统一入口。",
+  "My day has enough loose ends. Dossier is where I pull the threads.": "我的一天，散落着太多线头。在 Dossier，把它们收回手里。",
+  "My screen. My signal. I decide who gets a look.": "我的屏幕，我的信号。谁能看，由我决定。",
+  "My library. My volume. No algorithm gets the aux.": "我的曲库，我的音量。播放权不交给算法。",
+  "My machine, down to the last pixel. Built from CachyOS.": "我的机器，每个像素都由我做主。从 CachyOS 开始。",
+  "I lost one domain by six days. That was enough.": "一个域名，晚了六天，再也追不回来。一次就够了。"
 }

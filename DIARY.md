@@ -1,3 +1,9 @@
+## 2026-10-28: Refine WIP brand voice
+
+Restored the original NULLIAS teaser; removed repeated development sentences and sharpened brief EN/zh WIP copy.
+Uplink retains its approved wording. Portfolio cards match; product stages unchanged.
+Next: verify revised copy on DEV; production remains gated.
+
 ## 2026-10-28: Keep WIP copy brief
 
 Owner requested shorter WIP descriptions; seven EN/zh product descriptions now state purpose and development status only.
