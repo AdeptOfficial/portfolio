@@ -1,3 +1,10 @@
+## 2026-10-28: Publish reviewed catalogue v2.0.3
+
+Owner explicitly approved production after DEV review; release promoted through a regular merge and tagged v2.0.3.
+Tagged source matched DEV; independent production build and rollback retained in homeserver deployment evidence.
+Public routes, bilingual browser and mobile checks pass; analytics is DNS-blocked in the test environment.
+Next: production rollout complete; no announcement drafted.
+
 ## 2026-10-28: Refine WIP brand voice
 
 Restored the original NULLIAS teaser; removed repeated development sentences and sharpened brief EN/zh WIP copy.
