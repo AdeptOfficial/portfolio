@@ -119,7 +119,22 @@
     "Nothing on right now.": "75d8621dea142045a6248a8c63c54f54b08818c0388c189f232d357ea28b9007",
     "Contact — AdepT": "44657d7e098dbcba86766d114295bd1b592c0c9020df5a639dce9f993fc58226",
     "Contact moved — tap here if you aren't redirected.": "62c04e15b5b8a209dfeef37fdc2e4d0a3a5bbfbe95b14633863d1f3ea79eca08",
-    "Chat that's dead to their systems. Coming soon.": "ba97184c5f1fdebcb57c15e4515c0b43839e489ce957f68f95664feb156e429e"
+    "Chat that's dead to their systems. Coming soon.": "ba97184c5f1fdebcb57c15e4515c0b43839e489ce957f68f95664feb156e429e",
+    "Media request tracking in private production, from request to Jellyfin availability. Episode and recovery fixes remain in progress; no public download yet.": "41dc693ab5fbc7fd95b59cde8db53fad883d33d6105af90cb42bbff59889d417",
+    "My planner is moving into Dossier as Exsya. Dayplan keeps food history and exports until the Fitness migration is accepted.": "1cf3bd0a6718c253aa74672bc012b18d22bbd6fcf222946e3e1fa2eecba7a785",
+    "Alias-based encrypted chat in private development. Cross-device conversation and recovery acceptance are still underway; no Uplink account needed.": "0c742de4580b3a0622095c3674e29fab3449bd435bfd3be8696575e595983e4d",
+    "Domain monitoring in private development, with daily checks and recovery under observation before production acceptance.": "f6875c2affd3b42430f678683cd3a7dcd079117223ee60073119a7bf2e9208d5",
+    "Synchronized Jellyfin rooms running as a limited production pilot. Access is restricted; device, reconnect and China playback acceptance remain open.": "2c446b88c3e60fe858d07979ee706599b7aa45b99a65acb5d1bdff8db6885404",
+    "A private workspace for my day, tools and Syna. Exsya is the planner; Reconna and Fitness follow the family roadmap.": "d17d08aa45705277f1eb875dabd5783083d0a09b31b2246abd402928ffb52477",
+    "The account doorway for hosted apps, currently in private development. Dossier identity integration comes first; public registration and payments come later.": "35a1ad2bb58f57c22d0a742c7cf6ae11870339d8883f805fdb0f1688dce916a3",
+    "Game-server monitoring and Discord alerts in private production. It distinguishes sleeping AMP instances from outages; public distribution is still pending.": "a858f10730eaa9954942953edb5464c1e3e3742d44a62e88fda13162c60a164a",
+    "A Navidrome music player with desktop and browser prototypes. Native audio, Windows and synchronization acceptance remain open.": "2d39c6726b160f3d386f4a96f1edc7d1ef7154d8cc8d5089a3d194234b4642d5",
+    "Private browser-tab video and audio sharing with approved viewers. Full phone-to-desktop control is still being developed.": "0b95098075fcf2f6d24e23756dc570b2554d5f64096b06dc572485bb247405e0",
+    "My CachyOS-based desktop prototype, growing toward packages, a repository and an installable OS. No public installer yet.": "277f549b1040f40925c9db326c53068c1e142b550ce25ea3a81c4806589dd7ab",
+    "PRIVATE USE": "585a1a773b3dea9437d99e5f6aeeec33c378d586b4dc7e86880b97bf3e0bffbc",
+    "PILOT": "a7c7a12889c0f677d3eb4b6b5f443b9919b08fb966bdd3e919b5e71f129e080b",
+    "running privately, not generally available": "2fc02d23193338f0f8829aa5b95df42e6f0600a26e1024c20b6fe9f815366340",
+    "limited access, acceptance in progress": "42840a3be05287db39969b1df5ac935660163dbc08f29149138b903c10e2e269"
   },
   "apps": {}
 }

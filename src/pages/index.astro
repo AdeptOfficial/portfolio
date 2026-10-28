@@ -13,13 +13,13 @@ const shot = (slug: string) => (fs.existsSync(`public/projects/${slug}.png`) ? `
 
 // Hand-picked project list — the source of truth for what's public. Never
 // auto-list private repos. `href: null` renders as "Private" (no link).
-// Operational + In development render as cards; Dormant + Decommissioned as rows.
+// Active projects render as cards; Dormant + Decommissioned as rows.
 type Project = {
   slug: string;
   name: string;
   /** Card rank within the suit; '★' = the Joker. */
   rank: string;
-  status: 'OPERATIONAL' | 'IN DEVELOPMENT' | 'DORMANT' | 'DECOMMISSIONED';
+  status: 'OPERATIONAL' | 'PRIVATE USE' | 'PILOT' | 'IN DEVELOPMENT' | 'DORMANT' | 'DECOMMISSIONED';
   blurb: string;
   tags: string[];
   href: string | null;
@@ -53,10 +53,11 @@ const PROJECTS: Project[] = [
     slug: 'status-tracker',
     name: 'Status Tracker',
     rank: 'Q',
-    status: 'OPERATIONAL',
-    blurb: t("Follows a media request through a self-hosted pipeline, from requested to watchable, and shows where it is stuck."),
+    status: 'PRIVATE USE',
+    blurb: t("Media request tracking in private production, from request to Jellyfin availability. Episode and recovery fixes remain in progress; no public download yet."),
     tags: ['python', 'webhooks', 'self-hosted'],
-    href: 'https://github.com/AdeptOfficial/status-tracker',
+    href: 'https://adeptproductions.dev/apps/status-tracker/',
+    linkLabel: 'Studio',
   },
   {
     slug: 'tracker-bot',
@@ -67,6 +68,66 @@ const PROJECTS: Project[] = [
     tags: ['discord.js', 'mongodb'],
     href: null,
   },
+  {
+    slug: 'dossier',
+    name: 'Dossier',
+    rank: 'A',
+    status: 'IN DEVELOPMENT',
+    blurb: t("A private workspace for my day, tools and Syna. Exsya is the planner; Reconna and Fitness follow the family roadmap."),
+    tags: ["planner", "ai", "self-hosted"],
+    href: 'https://adeptproductions.dev/apps/dossier/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'uplink',
+    name: 'Uplink',
+    rank: 'K',
+    status: 'IN DEVELOPMENT',
+    blurb: t("The account doorway for hosted apps, currently in private development. Dossier identity integration comes first; public registration and payments come later."),
+    tags: ["identity", "accounts", "hosted"],
+    href: 'https://adeptproductions.dev/apps/uplink/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'amp-watchdog',
+    name: 'AMP Watchdog',
+    rank: 'K',
+    status: 'PRIVATE USE',
+    blurb: t("Game-server monitoring and Discord alerts in private production. It distinguishes sleeping AMP instances from outages; public distribution is still pending."),
+    tags: ["amp", "monitoring", "discord"],
+    href: 'https://adeptproductions.dev/apps/amp-watchdog/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'ghostnote',
+    name: 'Ghostnote',
+    rank: '8',
+    status: 'IN DEVELOPMENT',
+    blurb: t("A Navidrome music player with desktop and browser prototypes. Native audio, Windows and synchronization acceptance remain open."),
+    tags: ["music", "navidrome", "flutter"],
+    href: 'https://adeptproductions.dev/apps/ghostnote/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'psight',
+    name: 'PSIGHT',
+    rank: '7',
+    status: 'IN DEVELOPMENT',
+    blurb: t("Private browser-tab video and audio sharing with approved viewers. Full phone-to-desktop control is still being developed."),
+    tags: ["screen-sharing", "browser", "audio"],
+    href: 'https://adeptproductions.dev/apps/psight/',
+    linkLabel: 'Studio',
+  },
+  {
+    slug: 'synaos',
+    name: 'SynaOS',
+    rank: '6',
+    status: 'IN DEVELOPMENT',
+    blurb: t("My CachyOS-based desktop prototype, growing toward packages, a repository and an installable OS. No public installer yet."),
+    tags: ["linux", "hyprland", "desktop"],
+    href: 'https://adeptproductions.dev/apps/synaos/',
+    linkLabel: 'Studio',
+  },
   // ── In development ──
   {
     slug: 'dayplan',
@@ -74,7 +135,7 @@ const PROJECTS: Project[] = [
     rank: 'A',
     status: 'IN DEVELOPMENT',
     blurb:
-      t("AI-assisted day planner: describe your week in plain language and it proposes tasks, events, and time blocks. Review, apply atomically, undo as a group."),
+      t("My planner is moving into Dossier as Exsya. Dayplan keeps food history and exports until the Fitness migration is accepted."),
     tags: ['react', 'sqlite', 'ai-assistant', 'self-hosted'],
     href: 'https://adeptproductions.dev/apps/dayplan/',
     linkLabel: 'Studio',
@@ -85,7 +146,7 @@ const PROJECTS: Project[] = [
     rank: 'K',
     status: 'IN DEVELOPMENT',
     blurb:
-      t("Chat that's dead to their systems. Coming soon."),
+      t("Alias-based encrypted chat in private development. Cross-device conversation and recovery acceptance are still underway; no Uplink account needed."),
     tags: ['bun', 'privacy'],
     href: 'https://adeptproductions.dev/apps/nullias/',
     linkLabel: 'Studio',
@@ -104,7 +165,7 @@ const PROJECTS: Project[] = [
     name: 'Domain Watcher',
     rank: 'J',
     status: 'IN DEVELOPMENT',
-    blurb: t("Daily RDAP checks on domains I want or own. Alerts the day a drop is coming, so I never lose another one by six days."),
+    blurb: t("Domain monitoring in private development, with daily checks and recovery under observation before production acceptance."),
     tags: ['rdap', 'n8n', 'self-hosted'],
     href: 'https://adeptproductions.dev/apps/domain-watcher/',
     linkLabel: 'Studio',
@@ -122,11 +183,12 @@ const PROJECTS: Project[] = [
     slug: 'watch-together',
     name: 'Watch Together',
     rank: '9',
-    status: 'IN DEVELOPMENT',
+    status: 'PILOT',
     blurb:
-      t("Self-hosted watch-together for my Jellyfin: synced playback so friends can watch the same thing from anywhere in the world — including behind the Great Firewall."),
+      t("Synchronized Jellyfin rooms running as a limited production pilot. Access is restricted; device, reconnect and China playback acceptance remain open."),
     tags: ['jellyfin', 'sync', 'self-hosted'],
-    href: null,
+    href: 'https://adeptproductions.dev/apps/watch-together-jelly/',
+    linkLabel: 'Studio',
   },
   // ── Dormant ──
   {
@@ -161,9 +223,11 @@ const PROJECTS: Project[] = [
 ];
 
 // Project lifecycle: one vocabulary, one color per stage (all sampled from the brand art).
-// Suits map to stages — four suits, four stages, colors from the brand art.
+// Private use and pilot distinguish access from the existing public/working stages.
 const STAGES = [
   { key: 'OPERATIONAL', suit: '♠', color: 'var(--color-signal)', note: t("shipped & running"), layout: 'cards' },
+  { key: 'PRIVATE USE', suit: '♠', color: 'var(--color-muted)', note: t("running privately, not generally available"), layout: 'cards' },
+  { key: 'PILOT', suit: '♠', color: 'var(--color-signal)', note: t("limited access, acceptance in progress"), layout: 'cards' },
   { key: 'IN DEVELOPMENT', suit: '♥', color: 'var(--color-matrix)', note: t("actively being built"), layout: 'cards' },
   { key: 'DORMANT', suit: '♦', color: 'var(--color-scarf)', note: t("face-down, may re-enter the deck"), layout: 'rows' },
   { key: 'DECOMMISSIONED', suit: '♣', color: 'var(--color-crimson)', note: t("the discard pile"), layout: 'rows' },
@@ -384,7 +448,7 @@ const CAPABILITIES = [
           <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
             <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">{job.period}</p>
             <div class="sm:col-span-9">
-              <h3 class="font-display text-lg font-bold">
+              <h3 class="min-w-0 [overflow-wrap:anywhere] font-display text-lg font-bold">
                 {job.role} <span class="text-faint">//</span> <span class="redact">{job.org}</span>
               </h3>
               <ul class="mt-2 space-y-1 text-sm leading-relaxed text-muted">
@@ -404,7 +468,7 @@ const CAPABILITIES = [
       <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
         <p class="font-mono text-[11px] font-bold tracking-[0.2em] sm:col-span-3" style="color: var(--color-signal);"> {t("INCOMING 2027")} </p>
         <div class="sm:col-span-9">
-          <h3 class="font-display text-lg font-bold"> {t("M.S., Computer Science")} <span class="text-faint">//</span>
+          <h3 class="min-w-0 [overflow-wrap:anywhere] font-display text-lg font-bold"> {t("M.S., Computer Science")} <span class="text-faint">//</span>
             <span class="redact">[REDACTED] — ONLINE</span>
           </h3>
           <p class="mt-2 text-sm leading-relaxed text-muted">{t("Leveling up while shipping. Starts January 2027.")}</p>
@@ -413,7 +477,7 @@ const CAPABILITIES = [
       <div class="rv grid gap-2 border border-line bg-card p-5 sm:grid-cols-12 sm:gap-6">
         <p class="font-mono text-[11px] font-bold tracking-[0.2em] text-faint sm:col-span-3">{t("DEC 2023")}</p>
         <div class="sm:col-span-9">
-          <h3 class="font-display text-lg font-bold"> {t("Honours B.S., Computer Science")} <span class="text-faint">//</span>
+          <h3 class="min-w-0 [overflow-wrap:anywhere] font-display text-lg font-bold"> {t("Honours B.S., Computer Science")} <span class="text-faint">//</span>
             <span class="redact">[REDACTED] UNIVERSITY</span>
           </h3>
           <p class="mt-2 text-sm leading-relaxed text-muted"> {t("Minor in entrepreneurship. Major GPA 3.7/4.0. The rest is classified.")} </p>
@@ -467,14 +531,14 @@ const CAPABILITIES = [
               </div>
               <dl>
                 {rig.rows.map(([k, v, kind], i) => (
-                  <div class="grid grid-cols-[1.4rem_8.5rem_1fr] gap-x-1 text-sm leading-6">
+                  <div class="grid grid-cols-[1.4rem_minmax(0,1fr)] gap-x-1 text-sm leading-6 sm:grid-cols-[1.4rem_8.5rem_minmax(0,1fr)]">
                     <span class={`tree-tick${i === rig.rows.length - 1 ? ' last' : ''}`} aria-hidden="true" />
                     <dt class="whitespace-nowrap font-mono text-[11px] uppercase leading-6 tracking-[0.15em]" style="color: var(--color-signal);">
                       <span class="nf mr-1.5 text-[13px] normal-case tracking-normal" aria-hidden="true">{NF[k] ?? ''}</span>{t(k)}:
                     </dt>
-                    <dd class="leading-6 text-muted">
+                    <dd class="col-start-2 min-w-0 [overflow-wrap:anywhere] leading-6 text-muted sm:col-start-auto">
                       {kind === 'palette' ? (
-                        <span class="inline-flex items-center gap-1.5">
+                        <span class="inline-flex flex-wrap items-center gap-1.5">
                           {v}
                           <span class="inline-flex gap-1" aria-label={t("color scheme")}>
                             {PALETTE.map((c) => (
@@ -518,7 +582,7 @@ const CAPABILITIES = [
             </h3>
 
             {stage.layout === 'cards' ? (
-              <div class="stagger mt-4 grid gap-4 md:grid-cols-2">
+              <div class="stagger mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                 {items.map((p) => {
                   const Card = p.href ? 'a' : 'div';
                   const image = shot(p.slug);
@@ -527,7 +591,7 @@ const CAPABILITIES = [
                       href={localize(p.href ?? undefined)}
                       target={p.href?.startsWith('http') && !p.href.includes('adeptproductions.dev') ? '_blank' : undefined}
                       rel={p.href ? 'noreferrer' : undefined}
-                      class="rv-scale group block"
+                      class="rv-scale group block min-w-0"
                     >
                     <div
                       class="card-tilt relative flex h-full flex-col overflow-hidden border border-line transition-colors group-hover:border-muted"
@@ -553,8 +617,8 @@ const CAPABILITIES = [
                         {p.rank === '★' ? '★' : stage.suit}
                       </span>
                       <div class="relative flex flex-1 flex-col p-5 pl-9 pr-8">
-                        <div class="flex items-start justify-between gap-3">
-                          <h4 class="font-display text-lg font-bold">
+                        <div class="flex flex-wrap items-start justify-between gap-3">
+                          <h4 class="min-w-0 [overflow-wrap:anywhere] font-display text-lg font-bold">
                             {redactParts(p.name).map((part) =>
                               part === '[REDACTED]' ? <span class="redact">[REDACTED]</span> : part
                             )}

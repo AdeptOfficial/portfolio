@@ -118,5 +118,20 @@
   "Nothing on right now.": "当前没有播放音乐。",
   "Contact — AdepT": "联系 — AdepT",
   "Contact moved — tap here if you aren't redirected.": "联系方式已移至首页；若未自动跳转，请点击这里。",
-  "Chat that's dead to their systems. Coming soon.": "聊天，在他们的系统里查无此人。即将推出。"
+  "Chat that's dead to their systems. Coming soon.": "聊天，在他们的系统里查无此人。即将推出。",
+  "Media request tracking in private production, from request to Jellyfin availability. Episode and recovery fixes remain in progress; no public download yet.": "在私人生产环境中跟踪媒体请求，直到内容可在 Jellyfin 中观看。分集与恢复问题仍在修复，目前没有公开下载。",
+  "My planner is moving into Dossier as Exsya. Dayplan keeps food history and exports until the Fitness migration is accepted.": "我的规划工具正作为 Exsya 迁入 Dossier。饮食历史和导出会保留在 Dayplan，直到 Fitness 迁移通过验收。",
+  "Alias-based encrypted chat in private development. Cross-device conversation and recovery acceptance are still underway; no Uplink account needed.": "使用别名身份的加密聊天应用，正在私人开发中。跨设备对话与恢复验收仍在进行，不需要 Uplink 账户。",
+  "Domain monitoring in private development, with daily checks and recovery under observation before production acceptance.": "私人开发中的域名监控工具；每日检查和恢复行为仍在观察，之后才进行生产验收。",
+  "Synchronized Jellyfin rooms running as a limited production pilot. Access is restricted; device, reconnect and China playback acceptance remain open.": "Jellyfin 同步观影房间，现处于有限范围生产试用。访问受限；设备、重连和中国大陆网络播放验收仍未完成。",
+  "A private workspace for my day, tools and Syna. Exsya is the planner; Reconna and Fitness follow the family roadmap.": "管理日程、工具和 Syna 的私人工作空间。Exsya 是规划工具，Reconna 和 Fitness 将按产品家族路线图推进。",
+  "The account doorway for hosted apps, currently in private development. Dossier identity integration comes first; public registration and payments come later.": "托管应用的账户入口，目前处于私人开发阶段。先接入 Dossier 身份，再推进公开注册和支付。",
+  "Game-server monitoring and Discord alerts in private production. It distinguishes sleeping AMP instances from outages; public distribution is still pending.": "在私人生产环境中监控游戏服务器并发送 Discord 提醒，区分 AMP 实例休眠与故障；尚未公开发行。",
+  "A Navidrome music player with desktop and browser prototypes. Native audio, Windows and synchronization acceptance remain open.": "拥有桌面和浏览器原型的 Navidrome 音乐播放器。原生音频、Windows 和同步验收仍未完成。",
+  "Private browser-tab video and audio sharing with approved viewers. Full phone-to-desktop control is still being developed.": "向获准观看者分享浏览器标签页的视频和声音。手机完整控制桌面的功能仍在开发。",
+  "My CachyOS-based desktop prototype, growing toward packages, a repository and an installable OS. No public installer yet.": "基于 CachyOS 的桌面原型，正向软件包、仓库和可安装操作系统推进。目前没有公开安装器。",
+  "PRIVATE USE": "私人使用",
+  "PILOT": "试用",
+  "running privately, not generally available": "私人运行，尚未普遍开放",
+  "limited access, acceptance in progress": "有限访问，验收仍在进行"
 }

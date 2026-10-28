@@ -32,6 +32,12 @@ Build the image from the `Dockerfile` and run it with `compose.yaml`. Where it r
 how it is fronted and how a release is approved are documented privately; the
 publishing flow is user-gated, dev first, then production.
 
+## Project catalogue
+
+Selected cards follow the [studio catalogue state](../studio/docs/catalogue-state.md): private use and pilot do not imply public availability.
+Dossier and Uplink remain in development; Dayplan describes its staged migration. Product cards link to localized studio pages,
+not private repository URLs. The project list remains curated rather than populated from GitHub.
+
 ## // codesign
 
 <img src="https://raw.githubusercontent.com/AdeptOfficial/AdeptOfficial/main/assets/codesign-typing.svg" alt="// code-signed by AdepT_X · stay sad and dead <3">
