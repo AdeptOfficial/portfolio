@@ -134,7 +134,14 @@
     "PRIVATE USE": "585a1a773b3dea9437d99e5f6aeeec33c378d586b4dc7e86880b97bf3e0bffbc",
     "PILOT": "a7c7a12889c0f677d3eb4b6b5f443b9919b08fb966bdd3e919b5e71f129e080b",
     "running privately, not generally available": "2fc02d23193338f0f8829aa5b95df42e6f0600a26e1024c20b6fe9f815366340",
-    "limited access, acceptance in progress": "42840a3be05287db39969b1df5ac935660163dbc08f29149138b903c10e2e269"
+    "limited access, acceptance in progress": "42840a3be05287db39969b1df5ac935660163dbc08f29149138b903c10e2e269",
+    "Private chat built around aliases and encryption. In development.": "f5012f3e20a9f4dfc3ed15ab5d57751c272a37580b8fa50e391055a89435c18b",
+    "One doorway to the hosted apps. In development.": "fa8eaac041474c486aed97e75aadfdf710704c1996a5a03cef93bdab332c2346",
+    "Share a browser tab and its audio with viewers I approve. In development.": "89456cb31b3792c6c492437824ce140361c602169795b47da278b10c4a5ee507",
+    "A private workspace for my day, my tools and Syna. In development.": "ab240c58b9b47945174e937c3bc1a48c101448a33f681510646748fa339bd4e4",
+    "My music library, with a desktop and browser player that stays mine. In development.": "5225f4dca2517379063028184878215e0af77ff4de8d24e955533f9a8b11cb53",
+    "My CachyOS-based desktop, growing into an installable operating system. In development.": "67aab212a4870286a850d53a67cd55a862a0a0efa2892f244ecd91e96c743aa9",
+    "A watchlist for domains I want or own, with alerts when things change. In development.": "c37f70a8bc19f6ec3675f2571d6b60d9420927fc237f3fafb7565de9ceaf8bc4"
   },
   "apps": {}
 }
