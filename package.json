@@ -18,7 +18,7 @@
     "@fontsource-variable/space-grotesk": "^5.0.0",
     "@supabase/supabase-js": "^2.45.0",
     "@tailwindcss/vite": "^4.0.0",
-    "astro": "^7.4.0",
+    "astro": "^7.4.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0"
